@@ -23,6 +23,7 @@ class MenuController extends Controller
 
     public function create()
     {
+
         return view('menu.create');
     }
 
@@ -49,4 +50,3 @@ class MenuController extends Controller
         return redirect()->route('menu.index')->with('success', 'Item criado com sucesso!');
     }
 }
-
