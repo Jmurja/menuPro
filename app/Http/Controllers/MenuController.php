@@ -47,6 +47,6 @@ class MenuController extends Controller
             'image_url' => isset($validated['image_url']) ? Storage::url($validated['image_url']) : null,
         ]);
 
-        return redirect()->route('menu.index')->with('success', 'Item criado com sucesso!');
+        return back()->with('success', 'Item criado com sucesso!');
     }
 }
