@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\MenuItem;
 use Illuminate\Http\Request; // ✅ necessário
 use Illuminate\Support\Facades\Storage; // ✅ necessário
@@ -23,8 +24,9 @@ class MenuController extends Controller
 
     public function create()
     {
+        $categories = Category::orderBy('name')->get();
 
-        return view('menu.create');
+        return view('menu.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -33,18 +35,21 @@ class MenuController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
-            'image' => 'nullable|image|max:2048', // até 2MB
+            'category_id' => 'required|exists:categories,id',
+            'image' => 'nullable|image|max:2048',
         ]);
 
         if ($request->hasFile('image')) {
             $validated['image_url'] = $request->file('image')->store('menu-images', 'public');
+            $validated['image_url'] = Storage::url($validated['image_url']);
         }
 
-        \App\Models\MenuItem::create([
+        MenuItem::create([
             'name' => $validated['name'],
             'description' => $validated['description'] ?? null,
             'price' => $validated['price'],
-            'image_url' => isset($validated['image_url']) ? Storage::url($validated['image_url']) : null,
+            'image_url' => $validated['image_url'] ?? null,
+            'category_id' => $validated['category_id'],
         ]);
 
         return back()->with('success', 'Item criado com sucesso!');

@@ -43,6 +43,21 @@
                 ></textarea>
             </div>
 
+            <div>
+                <label for="category_id" class="block mb-1 font-medium text-zinc-700 dark:text-white">Categoria *</label>
+                <select
+                    name="category_id"
+                    id="category_id"
+                    required
+                    class="w-full px-4 py-2 border rounded-lg dark:bg-zinc-800 dark:text-white border-zinc-300 focus:ring-2 focus:ring-zinc-500"
+                >
+                    <option value="">Selecione uma categoria</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
             {{-- Preço --}}
             <div>
                 <label for="price" class="block mb-1 font-medium text-zinc-700 dark:text-white">Preço (R$) *</label>

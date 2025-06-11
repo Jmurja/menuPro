@@ -10,13 +10,11 @@ class MenuItemSeeder extends Seeder
 {
     public function run(): void
     {
-        // Garante que pelo menos uma categoria exista
         $category = Category::firstOrCreate(
             ['slug' => 'entradas'],
             ['name' => 'Entradas']
         );
 
-        // Cria os itens com categoria associada
         MenuItem::factory()
             ->count(10)
             ->create([
