@@ -11,11 +11,10 @@ class MenuController extends Controller
 {
     public function index()
     {
-        $categories = Category::with(['menuItems' => function ($query) {
-            $query->latest();
-        }])->orderBy('name')->get();
+        $items = MenuItem::latest()->get();
+        $categories = Category::orderBy('name')->get();
 
-        return view('menu.index', compact('categories'));
+        return view('menu.index', compact('items', 'categories'));
     }
 
 
@@ -34,6 +33,10 @@ class MenuController extends Controller
 
     public function store(Request $request)
     {
+        $request->merge([
+            'price' => $this->parseCurrencyToFloat($request->input('price')),
+        ]);
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -57,6 +60,21 @@ class MenuController extends Controller
 
         return back()->with('success', 'Item criado com sucesso!');
     }
+
+    private function parseCurrencyToFloat($value)
+    {
+        if (!$value) return 0;
+
+        // Remove símbolo e separadores de milhar
+        $value = str_replace(['R$', ' '], '', $value);
+        $value = preg_replace('/\.(?=\d{3,})/', '', $value); // remove pontos de milhar
+
+        // Substitui vírgula por ponto
+        $value = str_replace(',', '.', $value);
+
+        return floatval($value);
+    }
+
 
     public function edit($id)
     {
