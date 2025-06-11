@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('menu_items', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->decimal('price', 8, 2);
-            $table->string('image_url')->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->string('name')->unique(); // Ex: "Entradas", "Bebidas"
+            $table->string('slug')->unique(); // Para URLs amigáveis, ex: "entradas"
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('menu_items');
+        Schema::dropIfExists('categories');
     }
 };

@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class MenuItem extends Model
 {
     use HasFactory;
-
     protected $fillable = ['name', 'description', 'price', 'image_url'];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
+
 
