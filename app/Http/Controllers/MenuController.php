@@ -11,8 +11,11 @@ class MenuController extends Controller
 {
     public function index()
     {
-        $items = MenuItem::latest()->get();
-        return view('menu.index', compact('items'));
+        $categories = Category::with(['menuItems' => function ($query) {
+            $query->latest();
+        }])->orderBy('name')->get();
+
+        return view('menu.index', compact('categories'));
     }
 
 
