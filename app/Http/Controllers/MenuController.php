@@ -11,11 +11,15 @@ class MenuController extends Controller
 {
     public function index()
     {
-        $items = MenuItem::latest()->get();
+        $items = MenuItem::with('category')->get()->groupBy(function ($item) {
+            return $item->category->name ?? 'Sem Categoria';
+        });
+
         $categories = Category::orderBy('name')->get();
 
         return view('menu.index', compact('items', 'categories'));
     }
+
 
 
     public function show($id)
