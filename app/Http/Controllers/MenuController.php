@@ -20,6 +20,20 @@ class MenuController extends Controller
         return view('menu.index', compact('items', 'categories'));
     }
 
+    public function publicMenu()
+    {
+        $items = MenuItem::with('category')->get()->groupBy(function ($item) {
+            return $item->category->name ?? 'Sem Categoria';
+        });
+
+        $categories = Category::orderBy('name')->get();
+
+        // Fake WhatsApp number for now
+        $whatsappNumber = '5511999999999';
+
+        return view('menu.public', compact('items', 'categories', 'whatsappNumber'));
+    }
+
 
 
     public function show($id)

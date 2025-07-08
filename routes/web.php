@@ -6,7 +6,7 @@ use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 
-Route::get('/', [MenuController::class, 'index'])->name('home');
+Route::get('/', [MenuController::class, 'publicMenu'])->name('home');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
