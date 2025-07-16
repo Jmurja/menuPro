@@ -1,4 +1,25 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+    const image = document.getElementById('image');
+
+    function validateImage(input) {
+        if (!input.files || input.files.length === 0) return '';
+        const file = input.files[0];
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        const maxSize = 2 * 1024 * 1024; // 2MB
+
+        if (!allowedTypes.includes(file.type)) {
+            return 'O arquivo deve ser uma imagem válida (jpeg, png, gif, webp).';
+        }
+
+        if (file.size > maxSize) {
+            return 'A imagem deve ter no máximo 2MB.';
+        }
+
+        return '';
+    }
+
+
     const form = document.querySelector('#create-menu-item-form');
     if (!form) return;
 
@@ -93,8 +114,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const fields = [
         { el: name, validate: validateName },
         { el: price, validate: validatePrice },
-        { el: category, validate: validateCategory }
+        { el: category, validate: validateCategory },
+        { el: image, validate: validateImage }
     ];
+
+
 
     // Validação em tempo real (input/blur)
     fields.forEach(field => {
