@@ -129,4 +129,22 @@ class MenuController extends Controller
         return redirect()->route('menu')->with('success', 'Item excluído com sucesso!');
     }
 
+    public function storeCategory(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:categories,name',
+        ]);
+
+        $slug = \Illuminate\Support\Str::slug($validated['name']);
+
+        Category::create([
+            'name' => $validated['name'],
+            'slug' => $slug,
+        ]);
+
+        return back()->with('success', 'Categoria criada com sucesso!');
+    }
+
+
 }
+

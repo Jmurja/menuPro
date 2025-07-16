@@ -12,10 +12,4 @@ class Category extends Model
     {
         return $this->hasMany(MenuItem::class);
     }
-
-    public function create()
-    {
-        $categories = Category::orderBy('name')->get();
-        return view('menu.create', compact('categories'));
-    }
 }

@@ -7,6 +7,11 @@
             Adicionar Novo Item
         </button>
 
+        <button data-modal-target="create-category-modal" data-modal-toggle="create-category-modal"
+                class="mb-6 inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800">
+            Adicionar Nova Categoria
+        </button>
+
         {{-- Agrupado por categoria --}}
         @forelse($items as $categoryName => $categoryItems)
             <h2 class="text-2xl font-semibold text-zinc-800 dark:text-white mt-10 mb-4">{{ $categoryName }}</h2>
@@ -68,12 +73,14 @@
 
                     @include('menu.modal.edit')
                     @include('menu.modal.show')
-                    @include('menu.modal.createItem')
-                    @vite('resources/js/validate-menu-create.js')
                 @endforeach
             </div>
         @empty
             <p class="text-zinc-500 dark:text-zinc-400">Nenhum item no cardápio.</p>
         @endforelse
     </div>
+
+    @include('menu.modal.createItem')
+    @include('menu.modal.createCategory')
+    @vite('resources/js/validate-menu-create.js')
 </x-layouts.app>
