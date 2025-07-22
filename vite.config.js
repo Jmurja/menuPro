@@ -11,7 +11,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/js/validate-menu-create.js',
-                'resources/js/cart.js',
+                // 'resources/js/cart.js',
             ],
             refresh: true,
         }),

@@ -48,6 +48,39 @@
                            class="mt-1 block w-full text-sm text-zinc-900 dark:text-zinc-100 file:bg-zinc-100 file:border-none file:rounded file:px-4 file:py-2 file:mr-4 file:text-sm file:font-semibold file:text-zinc-700 hover:file:bg-zinc-200">
                 </div>
 
+                <!-- Status (Ativo/Inativo) -->
+                <div>
+                    <label for="is_active-{{ $item->id }}" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Status</label>
+                    <select name="is_active" id="is_active-{{ $item->id }}"
+                           class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                        <option value="1" {{ $item->is_active ? 'selected' : '' }}>Ativo</option>
+                        <option value="0" {{ !$item->is_active ? 'selected' : '' }}>Inativo</option>
+                    </select>
+                </div>
+
+                <!-- Estoque -->
+                <div>
+                    <label for="stock_quantity-{{ $item->id }}" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Quantidade em Estoque (opcional)</label>
+                    <input type="number" name="stock_quantity" id="stock_quantity-{{ $item->id }}" min="0" value="{{ $item->stock_quantity }}"
+                           class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                </div>
+
+                <!-- Horário de Disponibilidade -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="availability_start_time-{{ $item->id }}" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Horário de Início (opcional)</label>
+                        <input type="time" name="availability_start_time" id="availability_start_time-{{ $item->id }}"
+                               value="{{ $item->availability_start_time ? \Carbon\Carbon::parse($item->availability_start_time)->format('H:i') : '' }}"
+                               class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                    </div>
+                    <div>
+                        <label for="availability_end_time-{{ $item->id }}" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Horário de Término (opcional)</label>
+                        <input type="time" name="availability_end_time" id="availability_end_time-{{ $item->id }}"
+                               value="{{ $item->availability_end_time ? \Carbon\Carbon::parse($item->availability_end_time)->format('H:i') : '' }}"
+                               class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                    </div>
+                </div>
+
                 <!-- Ações -->
                 <div class="flex justify-end gap-2">
                     <button data-modal-hide="edit-modal-{{ $item->id }}" type="button"

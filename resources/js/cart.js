@@ -1,3 +1,4 @@
+/*
 // Shopping Cart functionality
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize cart from localStorage or empty if not exists
@@ -198,3 +199,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize cart UI
     updateCartBadge();
 });
+*/

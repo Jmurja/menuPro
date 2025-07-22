@@ -57,6 +57,37 @@
                                class="w-full text-zinc-700 dark:text-white">
                     </div>
 
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="is_active" class="block mb-1 font-medium text-zinc-700 dark:text-white">Status</label>
+                            <select name="is_active" id="is_active"
+                                   class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                                <option value="1" selected>Ativo</option>
+                                <option value="0">Inativo</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="stock_quantity" class="block mb-1 font-medium text-zinc-700 dark:text-white">Quantidade em Estoque (opcional)</label>
+                            <input type="number" name="stock_quantity" id="stock_quantity" min="0"
+                                   class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="availability_start_time" class="block mb-1 font-medium text-zinc-700 dark:text-white">Horário de Início (opcional)</label>
+                            <input type="time" name="availability_start_time" id="availability_start_time"
+                                   class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                        </div>
+
+                        <div>
+                            <label for="availability_end_time" class="block mb-1 font-medium text-zinc-700 dark:text-white">Horário de Término (opcional)</label>
+                            <input type="time" name="availability_end_time" id="availability_end_time"
+                                   class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                        </div>
+                    </div>
+
                     <div class="pt-4">
                         <button type="submit"
                                 class="w-full bg-zinc-600 hover:bg-zinc-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200">

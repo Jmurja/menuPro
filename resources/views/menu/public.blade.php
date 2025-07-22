@@ -2,10 +2,46 @@
     <div class="py-10 px-4 sm:px-6 lg:px-8">
         <h1 class="text-3xl font-bold text-zinc-900 dark:text-white mb-6 text-center">Cardápio</h1>
 
-        {{-- Notification for adding to cart --}}
-        <div id="cart-notification" class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg hidden z-50">
-            Item adicionado ao carrinho!
+        {{-- Search and Filter Form --}}
+        <div class="mb-8 max-w-3xl mx-auto">
+            <form action="{{ route('home') }}" method="GET" class="flex flex-col md:flex-row gap-4">
+                <div class="flex-grow">
+                    <input
+                        type="text"
+                        name="search"
+                        placeholder="Buscar por nome ou descrição..."
+                        value="{{ request('search') }}"
+                        class="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white"
+                    >
+                </div>
+                <div class="w-full md:w-auto">
+                    <select
+                        name="category"
+                        class="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white"
+                    >
+                        <option value="">Todas as categorias</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="w-full md:w-auto">
+                    <button
+                        type="submit"
+                        class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                        Buscar
+                    </button>
+                </div>
+            </form>
         </div>
+
+        {{-- Notification for adding to cart --}}
+        {{-- <div id="cart-notification" class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg hidden z-50">
+            Item adicionado ao carrinho!
+        </div> --}}
 
         {{-- Agrupado por categoria --}}
         @forelse($items as $categoryName => $categoryItems)
@@ -33,13 +69,13 @@
                             <p class="mb-4 text-lg font-semibold text-green-700 dark:text-green-400">
                                 R$ {{ number_format($item->price, 2, ',', '.') }}
                             </p>
-                            <button
+                            {{-- <button
                                 class="add-to-cart w-full px-3 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300"
                                 data-id="{{ $item->id }}"
                                 data-name="{{ $item->name }}"
                                 data-price="{{ $item->price }}">
                                 Adicionar ao Carrinho
-                            </button>
+                            </button> --}}
                         </div>
                     </div>
                 @endforeach
@@ -49,17 +85,17 @@
         @endforelse
 
         {{-- Cart Button --}}
-        <div class="fixed bottom-6 right-6 flex flex-col gap-4">
+        {{-- <div class="fixed bottom-6 right-6 flex flex-col gap-4">
             <button id="cart-button" class="relative flex items-center justify-center p-4 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
                 <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center hidden">0</span>
             </button>
-        </div>
+        </div> --}}
 
         {{-- Cart Modal --}}
-        <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        {{-- <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
             <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-xl max-w-md w-full max-h-[80vh] flex flex-col">
                 <div class="flex justify-between items-center border-b border-zinc-200 dark:border-zinc-700 p-4">
                     <h3 class="text-xl font-semibold text-zinc-900 dark:text-white">Seu Carrinho</h3>
@@ -90,8 +126,8 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 
-    @vite('resources/js/cart.js')
+    {{-- @vite('resources/js/cart.js') --}}
 </x-layouts.public>
