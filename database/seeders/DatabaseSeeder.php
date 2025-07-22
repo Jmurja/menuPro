@@ -15,8 +15,8 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
         $this->call([
-            MenuItemSeeder::class,
             CategorySeeder::class,
+            MenuItemSeeder::class,
         ]);
 
         User::factory()->create([
