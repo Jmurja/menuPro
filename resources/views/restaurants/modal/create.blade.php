@@ -27,6 +27,12 @@
                         <input type="text" name="name" id="name" required
                                class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                     </div>
+                  <div>
+                    <label for="cnpj" class="block mb-1 font-medium text-zinc-700 dark:text-white">CNPJ</label>
+                    <input type="text" name="cnpj" id="cnpj" maxlength="18"
+                           class="cnpj-mask mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white"
+                           placeholder="00.000.000/0000-00">
+                  </div>
 
                     <div>
                         <label for="zip_code" class="block mb-1 font-medium text-zinc-700 dark:text-white">CEP</label>

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('role')->default('admin');
             $table->string('phone')->nullable();
+            $table->string('cpf', 14)->nullable()->unique();
             $table->boolean('is_active')->default(true);
             $table->rememberToken();
             $table->timestamps();

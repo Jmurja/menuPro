@@ -30,6 +30,7 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name'     => ['required', 'string', 'max:255'],
+            'cpf' => ['nullable', 'digits:11', 'unique:users,cpf'],
             'email'    => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'min:6', 'confirmed'],
             'role'     => ['required', 'in:' . implode(',', array_column(UserRole::cases(), 'value'))],
@@ -52,6 +53,7 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name'     => ['required', 'string', 'max:255'],
+            'cpf' => ['nullable', 'digits:11', 'unique:users,cpf,' . $user->id],
             'email'    => ['required', 'email', 'unique:users,email,' . $user->id],
             'role'     => ['required', 'in:' . implode(',', array_column(UserRole::cases(), 'value'))],
             'phone'    => ['nullable', 'string', 'max:20'],

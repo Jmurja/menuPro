@@ -9,6 +9,7 @@ return new class extends Migration {
         Schema::create('restaurants', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('cnpj', 18)->nullable()->unique();
             $table->string('zip_code', 9)->nullable();
             $table->string('street')->nullable();
             $table->string('number')->nullable();
