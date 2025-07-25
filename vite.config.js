@@ -14,6 +14,7 @@ export default defineConfig({
                 'resources/js/cart.js',
                 'resources/js/darkMode.js',
                 'resources/js/format-phone.js',
+                'resources/js/restaurant-user-role.js',
             ],
             refresh: true,
         }),
