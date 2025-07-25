@@ -36,6 +36,13 @@
                     </div>
 
                     <div>
+                        <label for="cpf" class="block mb-1 font-medium text-zinc-700 dark:text-white">CPF</label>
+                        <input type="text" name="cpf" id="cpf" maxlength="14"
+                               class="cpf-mask mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white"
+                               placeholder="000.000.000-00">
+                    </div>
+
+                    <div>
                         <label for="phone"
                                class="block mb-1 font-medium text-zinc-700 dark:text-white">Telefone</label>
                         <input type="text" name="phone" id="phone"
