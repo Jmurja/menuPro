@@ -26,7 +26,8 @@ class MenuController extends Controller
             ->get()
             ->groupBy(fn($item) => $item->category->name ?? 'Sem Categoria');
 
-        $categories = Category::orderBy('name')->get();
+        $restaurant = auth()->user()->primaryRestaurant();
+        $categories = Category::where('restaurant_id', $restaurant->id)->orderBy('name')->get();
 
         return view('menu.index', compact('items', 'categories'));
     }

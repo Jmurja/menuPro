@@ -4,27 +4,43 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
     public function create()
     {
-        return view('menu.modal.createCategory'); // Crie esta view com o form
+        $restaurant = auth()->user()->primaryRestaurant();
+
+        if (!$restaurant) {
+            return back()->with('error', 'Restaurante não vinculado.');
+        }
+
+        $categories = Category::where('restaurant_id', $restaurant->id)->orderBy('name')->get();
+        return view('menu.create', compact('categories'));
     }
 
     public function store(Request $request)
     {
+        $user = Auth::user();
+        $restaurant = $user->primaryRestaurant();
+
+        if (!$restaurant) {
+            return back()->with('error', 'Restaurante não vinculado.');
+        }
+
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:categories,name',
+            'name' => 'required|string|max:255',
         ]);
 
-        $slug = \Illuminate\Support\Str::slug($validated['name']);
-
         Category::create([
+            'restaurant_id' => $restaurant->id,
             'name' => $validated['name'],
-            'slug' => $slug,
+            'slug' => \Illuminate\Support\Str::slug($validated['name']),
         ]);
 
         return back()->with('success', 'Categoria criada com sucesso!');
     }
+
 }

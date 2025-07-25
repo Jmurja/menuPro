@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('restaurant_id')->constrained()->onDelete('cascade');
             $table->string('name')->unique(); // Ex: "Entradas", "Bebidas"
             $table->string('slug')->unique(); // Para URLs amigáveis, ex: "entradas"
             $table->timestamps();
