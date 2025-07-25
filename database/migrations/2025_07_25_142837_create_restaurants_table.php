@@ -9,6 +9,9 @@ return new class extends Migration {
         Schema::create('restaurants', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('city')->nullable();
+            $table->string('state', 2)->nullable();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

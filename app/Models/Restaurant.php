@@ -7,7 +7,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Restaurant extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'name',
+        'city',
+        'state',
+        'is_active'
+        ];
 
     /**
      * Usuários vinculados ao restaurante com seus respectivos cargos (roles).

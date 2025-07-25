@@ -32,14 +32,20 @@ class RestaurantController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name'              => ['required', 'string', 'max:255'],
-            'users'             => ['nullable', 'array'],
-            'users.*.id'        => ['required', 'exists:users,id'],
-            'users.*.role'      => ['required', Rule::in(['dono', 'garcom', 'caixa'])],
+            'name'         => ['required', 'string', 'max:255'],
+            'city'         => ['nullable', 'string', 'max:255'],
+            'state'        => ['nullable', 'string', 'size:2'],
+            'is_active'    => ['nullable', 'boolean'],
+            'users'        => ['nullable', 'array'],
+            'users.*.id'   => ['required', 'exists:users,id'],
+            'users.*.role' => ['required', Rule::in(['dono', 'garcom', 'caixa'])],
         ]);
 
         $restaurant = Restaurant::create([
-            'name' => $validated['name'],
+            'name'      => $validated['name'],
+            'city'      => $validated['city'] ?? null,
+            'state'     => $validated['state'] ?? null,
+            'is_active' => $request->has('is_active'),
         ]);
 
         if (!empty($validated['users'])) {
@@ -64,13 +70,21 @@ class RestaurantController extends Controller
     public function update(Request $request, Restaurant $restaurant)
     {
         $validated = $request->validate([
-            'name'              => ['required', 'string', 'max:255'],
-            'users'             => ['nullable', 'array'],
-            'users.*.id'        => ['required', 'exists:users,id'],
-            'users.*.role'      => ['required', Rule::in(['dono', 'garcom', 'caixa'])],
+            'name'         => ['required', 'string', 'max:255'],
+            'city'         => ['nullable', 'string', 'max:255'],
+            'state'        => ['nullable', 'string', 'size:2'],
+            'is_active'    => ['nullable', 'boolean'],
+            'users'        => ['nullable', 'array'],
+            'users.*.id'   => ['required', 'exists:users,id'],
+            'users.*.role' => ['required', Rule::in(['dono', 'garcom', 'caixa'])],
         ]);
 
-        $restaurant->update(['name' => $validated['name']]);
+        $restaurant->update([
+            'name'      => $validated['name'],
+            'city'      => $validated['city'] ?? null,
+            'state'     => $validated['state'] ?? null,
+            'is_active' => $request->has('is_active'),
+        ]);
 
         if (!empty($validated['users'])) {
             $syncData = collect($validated['users'])->mapWithKeys(function ($user) {
@@ -84,6 +98,7 @@ class RestaurantController extends Controller
 
         return redirect()->route('restaurants.index')->with('success', 'Restaurante atualizado com sucesso.');
     }
+
 
     public function destroy(Restaurant $restaurant)
     {
