@@ -34,18 +34,25 @@
                             <td class="px-6 py-4">{{ $user->email }}</td>
                             <td class="px-6 py-4">{{ $user->role?->label() }}</td>
                             <td class="px-6 py-4">
-                                <button data-modal-target="edit-modal-{{ $user->id }}" data-modal-toggle="edit-modal-{{ $user->id }}"
-                                        class="text-blue-600 hover:underline mr-4">
-                                    Editar
-                                </button>
-                            @if($user->id !== auth()->user()->id)
-                                <form action="{{ route('users.destroy', $user) }}" method="POST"
-                                      onsubmit="return confirm('Tem certeza que deseja excluir?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="text-red-600 hover:underline">Excluir</button>
-                                </form>
+                                <div class="flex gap-2 items-center">
+                                    <button type="button"
+                                            data-modal-target="edit-modal-{{ $user->id }}"
+                                            data-modal-toggle="edit-modal-{{ $user->id }}"
+                                            class="inline-flex items-center gap-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        Editar
+                                    </button>
+                                    @if ($user->id !== auth()->user()->id)
+                                        <form action="{{ route('users.destroy', $user) }}" method="POST"
+                                              onsubmit="return confirm('Tem certeza que deseja excluir este usuário?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                    class="inline-flex items-center gap-2 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                                                Excluir
+                                            </button>
+                                        </form>
                                     @endif
+                                </div>
                             </td>
                         </tr>
                     @endforeach
