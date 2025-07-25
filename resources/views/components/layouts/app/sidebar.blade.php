@@ -13,9 +13,11 @@
 
     <flux:navlist variant="outline">
         <flux:navlist.group :heading="__('Platform')" class="grid">
+            @cannot('admin-only')
             <flux:navlist.item icon="book-open" :href="route('menu')" :current="request()->routeIs('menu')">
                 {{ __('Menu') }}
             </flux:navlist.item>
+            @endcannot
             @can('admin-only')
                 <flux:navlist.group :heading="__('Painel do Admin')" class="mt-6">
                     <flux:navlist.item icon="users" :href="route('users.index')" :current="request()->routeIs('users.index')">
