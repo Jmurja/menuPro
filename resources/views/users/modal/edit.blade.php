@@ -41,7 +41,7 @@
                         <label for="phone-{{ $user->id }}"
                                class="block mb-1 font-medium text-zinc-700 dark:text-white">Telefone</label>
                         <input type="text" name="phone" id="phone-{{ $user->id }}" value="{{ $user->phone }}"
-                               class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                               class="phone-input mt-1 block w-full rounded-md border-zinc-300 shadow-sm dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                     </div>
 
                     <div>

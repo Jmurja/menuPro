@@ -1,4 +1,4 @@
-@php use App\Enums\UserRole; @endphp
+@php use App\Enums\UserRole;use Illuminate\Support\Str; @endphp
 <x-layouts.app :title="__('Usuários')">
     <div class="py-10 px-4 sm:px-6 lg:px-8">
         <h1 class="text-3xl font-bold text-zinc-900 dark:text-white mb-6">Usuários</h1>
@@ -50,7 +50,7 @@
                 Adicionar Novo Usuário
             </button>
         </div>
-    @if ($users->isEmpty())
+        @if ($users->isEmpty())
             <p class="text-zinc-500 dark:text-zinc-400">Nenhum usuário cadastrado.</p>
         @else
             <div class="overflow-x-auto">
@@ -59,7 +59,9 @@
                     <tr>
                         <th scope="col" class="px-6 py-3">Nome</th>
                         <th scope="col" class="px-6 py-3">Email</th>
+                        <th scope="col" class="px-6 py-3">Telefone</th>
                         <th scope="col" class="px-6 py-3">Cargo</th>
+                        <th scope="col" class="px-6 py-3">Status</th>
                         <th scope="col" class="px-6 py-3">Ações</th>
                     </tr>
                     </thead>
@@ -68,7 +70,16 @@
                         <tr class="bg-white border-b dark:bg-zinc-800 dark:border-zinc-700">
                             <td class="px-6 py-4">{{ $user->name }}</td>
                             <td class="px-6 py-4">{{ $user->email }}</td>
+                            <td class="px-6 py-4">
+                                {{ $user->phone ? Str::of($user->phone)->replaceMatches('/(\d{2})(\d{4,5})(\d{4})/', '($1) $2-$3') : '-' }}
+                            </td>
                             <td class="px-6 py-4">{{ $user->role?->label() }}</td>
+                            <td class="px-6 py-4">
+                                <span class="inline-block px-2 py-1 text-xs font-semibold rounded
+                                    {{ $user->is_active ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300' }}">
+                                    {{ $user->is_active ? 'Ativo' : 'Inativo' }}
+                                </span>
+                            </td>
                             <td class="px-6 py-4">
                                 <div class="flex gap-2 items-center">
                                     <button type="button"
@@ -99,4 +110,5 @@
     </div>
     @include('users.modal.create')
     @include('users.modal.edit')
+    @vite('resources/js/format-phone.js')
 </x-layouts.app>

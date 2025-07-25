@@ -39,6 +39,9 @@ class UserController extends Controller
 
         $validated['password'] = Hash::make($validated['password']);
         $validated['is_active'] = $request->has('is_active');
+        $validated['phone'] = $validated['phone']
+            ? preg_replace('/\D/', '', $validated['phone'])
+            : null;
 
         User::create($validated);
 
@@ -56,7 +59,9 @@ class UserController extends Controller
         ]);
 
         $validated['is_active'] = $request->has('is_active');
-
+        $validated['phone'] = $validated['phone']
+            ? preg_replace('/\D/', '', $validated['phone'])
+            : null;
         $user->update($validated);
 
         return redirect()->back()->with('success', 'Usuário atualizado com sucesso.');
