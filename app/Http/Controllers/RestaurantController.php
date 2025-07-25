@@ -18,8 +18,9 @@ class RestaurantController extends Controller
         }
 
         $restaurants = $query->orderBy('name')->get();
+        $users = User::all();
 
-        return view('restaurants.index', compact('restaurants'));
+        return view('restaurants.index', compact('restaurants', 'users'));
     }
 
     public function create()
