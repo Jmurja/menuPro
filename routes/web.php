@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\RestaurantController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
 use App\Livewire\Settings\Appearance;
@@ -36,6 +37,10 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
         //End Users Region
 
+        //restaurants Region
+        Route::get('restaurants', [RestaurantController::class, 'index'])->name('restaurants.index');
+
+        //End Restaurants Region
     });
 });
 

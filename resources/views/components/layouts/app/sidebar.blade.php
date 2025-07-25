@@ -21,6 +21,9 @@
                     <flux:navlist.item icon="users" :href="route('users.index')" :current="request()->routeIs('users.index')">
                         {{ __('Usuários') }}
                     </flux:navlist.item>
+                    <flux:navlist.item icon="building-storefront" :href="route('restaurants.index')" :current="request()->routeIs('restaurants.index')">
+                        {{ __('Restaurantes') }}
+                    </flux:navlist.item>
                 </flux:navlist.group>
             @endcan
         </flux:navlist.group>
@@ -112,6 +115,17 @@
                     <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>
                         {{ __('Settings') }}
                     </flux:menu.item>
+                    <flux:navlist.item icon="book-open" :href="route('menu')" :current="request()->routeIs('menu')">
+                        {{ __('Menu') }}
+                    </flux:navlist.item>
+                    @can('admin-only')
+                        <flux:menu.item :href="route('users.index')" icon="users">
+                            {{ __('Usuários') }}
+                        </flux:menu.item>
+                        <flux:menu.item :href="route('restaurants.index')" icon="building-storefront">
+                            {{ __('Restaurantes') }}
+                        </flux:menu.item>
+                    @endcan
                 </flux:menu.radio.group>
 
                 <flux:menu.separator />
