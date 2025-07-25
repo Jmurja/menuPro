@@ -111,4 +111,5 @@
     @include('users.modal.create')
     @include('users.modal.edit')
     @vite('resources/js/format-phone.js')
+    @vite('resources/js/cpf-mask.js')
 </x-layouts.app>
