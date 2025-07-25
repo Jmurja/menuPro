@@ -106,5 +106,4 @@
     </div>
     @include('restaurants.modal.create')
     @include('restaurants.modal.edit')
-    @vite('resources/js/restaurant-user-role.js')
 </x-layouts.app>
