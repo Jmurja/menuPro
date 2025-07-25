@@ -7,7 +7,15 @@
                     {{ session('success') }}
                 </div>
             @endif
-
+                @if ($errors->any())
+                    <div class="mb-4 p-4 bg-red-100 text-red-800 rounded">
+                        <ul class="list-disc list-inside text-sm">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             <h1 class="text-3xl font-bold text-zinc-900 dark:text-white">
                 Painel do Restaurante: {{ $restaurant->name }}
             </h1>
