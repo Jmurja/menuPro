@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Models;
-use App\Enums\UserRole;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,24 +10,24 @@ use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Atributos em massa.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $fillable = [
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Atributos ocultos na serialização.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -36,7 +35,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Casts automáticos de atributos.
      *
      * @return array<string, string>
      */
@@ -45,27 +44,18 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => UserRole::class,
         ];
     }
 
-    public function getRoleEnumAttribute(): ?UserRole
-    {
-        return UserRole::tryFrom($this->role);
-    }
-
-    public function setRoleEnumAttribute(UserRole $role): void
-    {
-        $this->role = $role->value;
-    }
-
     /**
-     * Get the user's initials
+     * Retorna as iniciais do nome do usuário.
      */
     public function initials(): string
     {
         return Str::of($this->name)
             ->explode(' ')
-            ->map(fn (string $name) => Str::of($name)->substr(0, 1))
+            ->map(fn (string $name) => Str::substr($name, 0, 1))
             ->implode('');
     }
 }

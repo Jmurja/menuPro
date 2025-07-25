@@ -6,6 +6,7 @@ use App\Http\Controllers\MenuController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
+use App\Http\Controllers\UserController;
 
 Route::get('/', [MenuController::class, 'publicMenu'])->name('home');
 
@@ -26,6 +27,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+
+    //Users Region
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    //End Users Region
 });
 
 
