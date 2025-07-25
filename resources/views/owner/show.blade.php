@@ -1,6 +1,13 @@
 <x-layouts.app :title="$restaurant->name">
     <div class="py-10 px-4 sm:px-6 lg:px-8">
         <div class="mb-6">
+
+            @if (session('success'))
+                <div class="mb-6 px-4 py-3 rounded-lg bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             <h1 class="text-3xl font-bold text-zinc-900 dark:text-white">
                 Painel do Restaurante: {{ $restaurant->name }}
             </h1>
@@ -60,7 +67,8 @@
         <div class="bg-white dark:bg-zinc-800 rounded-lg shadow p-6">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-semibold text-zinc-800 dark:text-white">Funcionários</h2>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg">
+                <button data-modal-target="add-employee-modal" data-modal-toggle="add-employee-modal"
+                        class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg">
                     + Adicionar Funcionário
                 </button>
             </div>
@@ -95,8 +103,23 @@
                                 </td>
                                 <td class="px-4 py-2">
                                     <div class="flex gap-2">
-                                        <button class="text-sm text-blue-600 hover:underline dark:text-blue-400">Editar</button>
-                                        <button class="text-sm text-red-600 hover:underline dark:text-red-400">Remover</button>
+                                        @if (Auth::user()->id !== $user->id)
+                                        <button type="button"
+                                                data-modal-target="edit-employee-modal-{{ $user->id }}"
+                                                data-modal-toggle="edit-employee-modal-{{ $user->id }}"
+                                                class="inline-flex items-center gap-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                            Editar
+                                        </button>
+                                            <form action="{{ route('owner.employees.destroy', [$restaurant, $user]) }}"  method="POST"
+                                                  onsubmit="return confirm('Tem certeza que deseja excluir este usuário?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                        class="inline-flex items-center gap-2 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                                                    Excluir
+                                                </button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -108,3 +131,5 @@
         </div>
     </div>
 </x-layouts.app>
+@include('owner.modal.create-employer')
+@include('owner.modal.edit-employee')

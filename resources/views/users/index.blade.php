@@ -17,6 +17,7 @@
                 </ul>
             </div>
         @endif
+        @endif
 
         <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
             <form method="GET" action="{{ route('users.index') }}" class="w-full max-w-xl">
