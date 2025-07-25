@@ -9,11 +9,15 @@ class Restaurant extends Model
 {
     protected $fillable = [
         'name',
+        'zip_code',
+        'street',
+        'number',
+        'complement',
+        'neighborhood',
         'city',
         'state',
-        'is_active'
-        ];
-
+        'is_active',
+    ];
     /**
      * Usuários vinculados ao restaurante com seus respectivos cargos (roles).
      */

@@ -106,4 +106,5 @@
     </div>
     @include('restaurants.modal.create')
     @include('restaurants.modal.edit')
+    @vite('resources/js/viacep.js')
 </x-layouts.app>

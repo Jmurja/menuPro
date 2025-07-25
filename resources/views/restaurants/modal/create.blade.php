@@ -8,7 +8,7 @@
                     Novo Restaurante
                 </h3>
                 <button type="button"
-                        class="text-zinc-400 bg-transparent hover:bg-zinc-200 hover:text-zinc-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-zinc-800 dark:hover:text-white"
+                        class="text-zinc-400 hover:text-zinc-900 dark:hover:text-white p-1.5 rounded-lg"
                         data-modal-hide="create-restaurant-modal">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
@@ -27,16 +27,51 @@
                         <input type="text" name="name" id="name" required
                                class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                     </div>
+
                     <div>
-                        <label for="city" class="block mb-1 font-medium text-zinc-700 dark:text-white">Cidade</label>
-                        <input type="text" name="city" id="city"
-                               class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                        <label for="zip_code" class="block mb-1 font-medium text-zinc-700 dark:text-white">CEP</label>
+                        <input type="text" name="zip_code" id="zip_code" maxlength="9"
+                               class="cep-mask mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                     </div>
 
                     <div>
-                        <label for="state" class="block mb-1 font-medium text-zinc-700 dark:text-white">Estado (UF)</label>
-                        <input type="text" name="state" id="state" maxlength="2"
-                               class="uppercase mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                        <label for="street" class="block mb-1 font-medium text-zinc-700 dark:text-white">Rua</label>
+                        <input type="text" name="street" id="street"
+                               class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="number" class="block mb-1 font-medium text-zinc-700 dark:text-white">Número</label>
+                            <input type="text" name="number" id="number"
+                                   class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                        </div>
+
+                        <div>
+                            <label for="complement" class="block mb-1 font-medium text-zinc-700 dark:text-white">Complemento</label>
+                            <input type="text" name="complement" id="complement"
+                                   class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="neighborhood" class="block mb-1 font-medium text-zinc-700 dark:text-white">Bairro</label>
+                        <input type="text" name="neighborhood" id="neighborhood"
+                               class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="city" class="block mb-1 font-medium text-zinc-700 dark:text-white">Cidade</label>
+                            <input type="text" name="city" id="city"
+                                   class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                        </div>
+
+                        <div>
+                            <label for="state" class="block mb-1 font-medium text-zinc-700 dark:text-white">Estado (UF)</label>
+                            <input type="text" name="state" id="state" maxlength="2"
+                                   class="uppercase mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                        </div>
                     </div>
 
                     <div class="flex items-center">

@@ -32,18 +32,31 @@ class RestaurantController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name'      => ['required', 'string', 'max:255'],
-            'city'      => ['nullable', 'string', 'max:255'],
-            'state'     => ['nullable', 'string', 'size:2'],
-            'is_active' => ['nullable', 'boolean'],
-            'user_id'   => ['required', 'exists:users,id'],
+            'name'         => ['required', 'string', 'max:255'],
+            'zip_code'     => ['nullable', 'string', 'max:9'],
+            'street'       => ['nullable', 'string', 'max:255'],
+            'number'       => ['nullable', 'string', 'max:50'],
+            'complement'   => ['nullable', 'string', 'max:255'],
+            'neighborhood' => ['nullable', 'string', 'max:255'],
+            'city'         => ['nullable', 'string', 'max:255'],
+            'state'        => ['nullable', 'string', 'size:2'],
+            'is_active'    => ['nullable', 'boolean'],
+            'user_id'      => ['required', 'exists:users,id'],
         ]);
+        $validated['zip_code'] = isset($validated['zip_code'])
+            ? preg_replace('/\D/', '', $validated['zip_code'])
+            : null;
 
         $restaurant = Restaurant::create([
-            'name'      => $validated['name'],
-            'city'      => $validated['city'] ?? null,
-            'state'     => $validated['state'] ?? null,
-            'is_active' => $request->has('is_active'),
+            'name'         => $validated['name'],
+            'zip_code'     => $validated['zip_code'] ?? null,
+            'street'       => $validated['street'] ?? null,
+            'number'       => $validated['number'] ?? null,
+            'complement'   => $validated['complement'] ?? null,
+            'neighborhood' => $validated['neighborhood'] ?? null,
+            'city'         => $validated['city'] ?? null,
+            'state'        => $validated['state'] ?? null,
+            'is_active'    => $request->has('is_active'),
         ]);
 
         $restaurant->users()->attach($validated['user_id'], ['role' => 'dono']);
@@ -54,18 +67,31 @@ class RestaurantController extends Controller
     public function update(Request $request, Restaurant $restaurant)
     {
         $validated = $request->validate([
-            'name'      => ['required', 'string', 'max:255'],
-            'city'      => ['nullable', 'string', 'max:255'],
-            'state'     => ['nullable', 'string', 'size:2'],
-            'is_active' => ['nullable', 'boolean'],
-            'user_id'   => ['required', 'exists:users,id'],
+            'name'         => ['required', 'string', 'max:255'],
+            'zip_code'     => ['nullable', 'string', 'max:9'],
+            'street'       => ['nullable', 'string', 'max:255'],
+            'number'       => ['nullable', 'string', 'max:50'],
+            'complement'   => ['nullable', 'string', 'max:255'],
+            'neighborhood' => ['nullable', 'string', 'max:255'],
+            'city'         => ['nullable', 'string', 'max:255'],
+            'state'        => ['nullable', 'string', 'size:2'],
+            'is_active'    => ['nullable', 'boolean'],
+            'user_id'      => ['required', 'exists:users,id'],
         ]);
+        $validated['zip_code'] = isset($validated['zip_code'])
+            ? preg_replace('/\D/', '', $validated['zip_code'])
+            : null;
 
         $restaurant->update([
-            'name'      => $validated['name'],
-            'city'      => $validated['city'] ?? null,
-            'state'     => $validated['state'] ?? null,
-            'is_active' => $request->has('is_active'),
+            'name'         => $validated['name'],
+            'zip_code'     => $validated['zip_code'] ?? null,
+            'street'       => $validated['street'] ?? null,
+            'number'       => $validated['number'] ?? null,
+            'complement'   => $validated['complement'] ?? null,
+            'neighborhood' => $validated['neighborhood'] ?? null,
+            'city'         => $validated['city'] ?? null,
+            'state'        => $validated['state'] ?? null,
+            'is_active'    => $request->has('is_active'),
         ]);
 
         $restaurant->users()->sync([
