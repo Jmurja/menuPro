@@ -26,6 +26,14 @@
                     </flux:navlist.item>
                 </flux:navlist.group>
             @endcan
+
+            @can('owner-only')
+                <flux:navlist.group :heading="__('Meu Restaurante')" class="mt-6">
+                    <flux:navlist.item icon="building-storefront" :href="route('my_restaurants.index')" :current="request()->routeIs('my_restaurants.*')">
+                        {{ __('Meu Restaurante') }}
+                    </flux:navlist.item>
+                </flux:navlist.group>
+            @endcan
         </flux:navlist.group>
     </flux:navlist>
 
@@ -126,6 +134,12 @@
                             {{ __('Restaurantes') }}
                         </flux:menu.item>
                     @endcan
+                    @can('owner-only')
+                        <flux:menu.item :href="route('my_restaurants.index')" icon="building-storefront">
+                            {{ __('Meu Restaurante') }}
+                        </flux:menu.item>
+                    @endcan
+
                 </flux:menu.radio.group>
 
                 <flux:menu.separator />

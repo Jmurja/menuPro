@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MyRestaurantController;
 use App\Http\Controllers\RestaurantController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
@@ -44,6 +45,13 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/restaurants/{restaurant}', [RestaurantController::class, 'update'])->name('restaurants.update');
         Route::delete('/restaurants/{restaurant}', [RestaurantController::class, 'destroy'])->name('restaurants.destroy');
         //End Restaurants Region
+    });
+
+    Route::middleware(['auth', 'can:owner-only'])->group(function () {
+        // my restaurants region
+        Route::get('/meus-restaurantes', [MyRestaurantController::class, 'index'])->name('my_restaurants.index');
+        Route::get('/meus-restaurantes/{restaurant}', [MyRestaurantController::class, 'show'])->name('my_restaurants.show');
+        // end my restaurants region
     });
 });
 

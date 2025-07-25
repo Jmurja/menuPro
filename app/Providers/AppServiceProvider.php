@@ -20,8 +20,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
         Gate::define('admin-only', [UserPolicy::class, 'isAdmin']);
-
+        Gate::define('owner-only', [UserPolicy::class, 'isOwner']);
     }
 }
