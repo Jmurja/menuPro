@@ -34,7 +34,7 @@ class UserController extends Controller
             'password' => ['required', 'min:6', 'confirmed'],
             'role'     => ['required', 'in:' . implode(',', array_column(UserRole::cases(), 'value'))],
             'phone'    => ['nullable', 'string', 'max:20'],
-            'is_active'=> ['nullable', 'boolean'],
+            'is_active'=> ['nullable'],
         ]);
 
         $validated['password'] = Hash::make($validated['password']);

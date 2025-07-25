@@ -8,6 +8,15 @@
                 {{ session('success') }}
             </div>
         @endif
+        @if ($errors->any())
+            <div class="mb-4 p-4 bg-red-100 text-red-800 rounded">
+                <ul class="list-disc list-inside text-sm">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
             <form method="GET" action="{{ route('users.index') }}" class="w-full max-w-xl">

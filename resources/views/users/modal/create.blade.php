@@ -37,9 +37,9 @@
 
                     <div>
                         <label for="phone"
-                               class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Telefone</label>
+                               class="block mb-1 font-medium text-zinc-700 dark:text-white">Telefone</label>
                         <input type="text" name="phone" id="phone"
-                               class="input-text" value="{{ old('phone') }}">
+                               class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white" value="{{ old('phone') }}">
                     </div>
 
                     <div>
@@ -68,7 +68,7 @@
                     </div>
 
                     <div class="flex items-center">
-                        <input type="checkbox" name="is_active" id="is_active" class="input-checkbox" checked>
+                        <input type="checkbox" value="1" name="is_active" id="is_active" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500 dark:bg-zinc-800 dark:border-zinc-600 input-checkbox" checked>
                         <label for="is_active" class="ml-2 text-sm text-zinc-700 dark:text-zinc-300">Ativo</label>
                     </div>
 
