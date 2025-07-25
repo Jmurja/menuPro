@@ -1,4 +1,5 @@
-<!-- Modal de Criação de Usuário -->
+@php use App\Enums\UserRole; @endphp
+    <!-- Modal de Criação de Usuário -->
 <div id="create-user-modal" tabindex="-1" aria-hidden="true"
      class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-full max-h-full bg-black/50">
     <div class="relative w-full max-w-2xl max-h-full mx-auto mt-20">
@@ -35,13 +36,22 @@
                     </div>
 
                     <div>
-                        <label for="password" class="block mb-1 font-medium text-zinc-700 dark:text-white">Senha *</label>
+                        <label for="phone"
+                               class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Telefone</label>
+                        <input type="text" name="phone" id="phone"
+                               class="input-text" value="{{ old('phone') }}">
+                    </div>
+
+                    <div>
+                        <label for="password" class="block mb-1 font-medium text-zinc-700 dark:text-white">Senha
+                            *</label>
                         <input type="password" name="password" id="password" required
                                class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                     </div>
 
                     <div>
-                        <label for="password_confirmation" class="block mb-1 font-medium text-zinc-700 dark:text-white">Confirmar Senha *</label>
+                        <label for="password_confirmation" class="block mb-1 font-medium text-zinc-700 dark:text-white">Confirmar
+                            Senha *</label>
                         <input type="password" name="password_confirmation" id="password_confirmation" required
                                class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                     </div>
@@ -51,10 +61,15 @@
                         <select name="role" id="role" required
                                 class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                             <option value="">Selecione um cargo</option>
-                            @foreach (\App\Enums\UserRole::options() as $option)
+                            @foreach (UserRole::options() as $option)
                                 <option value="{{ $option['value'] }}">{{ $option['label'] }}</option>
                             @endforeach
                         </select>
+                    </div>
+
+                    <div class="flex items-center">
+                        <input type="checkbox" name="is_active" id="is_active" class="input-checkbox" checked>
+                        <label for="is_active" class="ml-2 text-sm text-zinc-700 dark:text-zinc-300">Ativo</label>
                     </div>
 
                     <div class="pt-4">
