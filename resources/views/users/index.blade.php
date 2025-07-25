@@ -32,9 +32,13 @@
                         <tr class="bg-white border-b dark:bg-zinc-800 dark:border-zinc-700">
                             <td class="px-6 py-4">{{ $user->name }}</td>
                             <td class="px-6 py-4">{{ $user->email }}</td>
-                            <td class="px-6 py-4">{{ UserRole::tryFrom($user->role)?->label() }}</td>
+                            <td class="px-6 py-4">{{ $user->role?->label() }}</td>
                             <td class="px-6 py-4">
-                                @if($user->id !== auth()->user()->id)
+                                <button data-modal-target="edit-modal-{{ $user->id }}" data-modal-toggle="edit-modal-{{ $user->id }}"
+                                        class="text-blue-600 hover:underline mr-4">
+                                    Editar
+                                </button>
+                            @if($user->id !== auth()->user()->id)
                                 <form action="{{ route('users.destroy', $user) }}" method="POST"
                                       onsubmit="return confirm('Tem certeza que deseja excluir?');">
                                     @csrf
@@ -51,4 +55,5 @@
         @endif
     </div>
     @include('users.modal.create')
+    @include('users.modal.edit')
 </x-layouts.app>

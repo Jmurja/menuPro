@@ -31,6 +31,19 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Usuário cadastrado com sucesso.');
     }
 
+    public function update(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'name'  => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:users,email,' . $user->id],
+            'role'  => ['required', 'in:' . implode(',', array_column(UserRole::cases(), 'value'))],
+        ]);
+
+        $user->update($validated);
+
+        return redirect()->back()->with('success', 'Usuário atualizado com sucesso.');
+    }
+
     public function destroy(User $user)
     {
         $user->delete();
