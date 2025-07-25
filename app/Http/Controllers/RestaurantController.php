@@ -32,13 +32,11 @@ class RestaurantController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name'         => ['required', 'string', 'max:255'],
-            'city'         => ['nullable', 'string', 'max:255'],
-            'state'        => ['nullable', 'string', 'size:2'],
-            'is_active'    => ['nullable', 'boolean'],
-            'users'        => ['nullable', 'array'],
-            'users.*.id'   => ['required', 'exists:users,id'],
-            'users.*.role' => ['required', Rule::in(['dono', 'garcom', 'caixa'])],
+            'name'      => ['required', 'string', 'max:255'],
+            'city'      => ['nullable', 'string', 'max:255'],
+            'state'     => ['nullable', 'string', 'size:2'],
+            'is_active' => ['nullable', 'boolean'],
+            'user_id'   => ['required', 'exists:users,id'],
         ]);
 
         $restaurant = Restaurant::create([
@@ -48,35 +46,18 @@ class RestaurantController extends Controller
             'is_active' => $request->has('is_active'),
         ]);
 
-        if (!empty($validated['users'])) {
-            $syncData = collect($validated['users'])->mapWithKeys(function ($user) {
-                return [$user['id'] => ['role' => $user['role']]];
-            })->toArray();
-
-            $restaurant->users()->sync($syncData);
-        }
+        $restaurant->users()->attach($validated['user_id'], ['role' => 'dono']);
 
         return redirect()->route('restaurants.index')->with('success', 'Restaurante cadastrado com sucesso.');
-    }
-
-    public function edit(Restaurant $restaurant)
-    {
-        $restaurant->load('users');
-        $users = User::all();
-
-        return view('restaurants.edit', compact('restaurant', 'users'));
     }
 
     public function update(Request $request, Restaurant $restaurant)
     {
         $validated = $request->validate([
-            'name'         => ['required', 'string', 'max:255'],
-            'city'         => ['nullable', 'string', 'max:255'],
-            'state'        => ['nullable', 'string', 'size:2'],
-            'is_active'    => ['nullable', 'boolean'],
-            'users'        => ['nullable', 'array'],
-            'users.*.id'   => ['required', 'exists:users,id'],
-            'users.*.role' => ['required', Rule::in(['dono', 'garcom', 'caixa'])],
+            'name'      => ['required', 'string', 'max:255'],
+            'city'      => ['nullable', 'string', 'max:255'],
+            'state'     => ['nullable', 'string', 'size:2'],
+            'is_active' => ['nullable', 'boolean'],
         ]);
 
         $restaurant->update([
@@ -86,19 +67,8 @@ class RestaurantController extends Controller
             'is_active' => $request->has('is_active'),
         ]);
 
-        if (!empty($validated['users'])) {
-            $syncData = collect($validated['users'])->mapWithKeys(function ($user) {
-                return [$user['id'] => ['role' => $user['role']]];
-            })->toArray();
-
-            $restaurant->users()->sync($syncData);
-        } else {
-            $restaurant->users()->detach();
-        }
-
         return redirect()->route('restaurants.index')->with('success', 'Restaurante atualizado com sucesso.');
     }
-
 
     public function destroy(Restaurant $restaurant)
     {

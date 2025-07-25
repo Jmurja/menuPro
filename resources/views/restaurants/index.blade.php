@@ -80,10 +80,12 @@
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex gap-2 items-center">
-                                    <a href="{{ route('restaurants.edit', $restaurant) }}"
-                                       class="inline-flex items-center gap-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    <button type="button"
+                                            data-modal-target="edit-modal-{{ $restaurant->id }}"
+                                            data-modal-toggle="edit-modal-{{$restaurant->id }}"
+                                            class="inline-flex items-center gap-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                         Editar
-                                    </a>
+                                    </button>
                                     <form action="{{ route('restaurants.destroy', $restaurant) }}" method="POST"
                                           onsubmit="return confirm('Tem certeza que deseja excluir este restaurante?');">
                                         @csrf
@@ -103,6 +105,6 @@
         @endif
     </div>
     @include('restaurants.modal.create')
+    @include('restaurants.modal.edit')
     @vite('resources/js/restaurant-user-role.js')
-
 </x-layouts.app>

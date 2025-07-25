@@ -47,29 +47,17 @@
                     </div>
 
                     <div>
-                        <label class="block mb-2 font-medium text-zinc-700 dark:text-white">Vincular Usuários</label>
-                        <div id="user-role-container" class="space-y-4">
-                            <div class="flex items-center gap-4">
-                                <select name="users[0][id]" required
-                                        class="w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
-                                    <option value="">Selecione um usuário</option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
-                                    @endforeach
-                                </select>
-                                <select name="users[0][role]" required
-                                        class="w-48 rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
-                                    <option value="dono">Dono</option>
-                                    <option value="garcom">Garçom</option>
-                                    <option value="caixa">Caixa</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button type="button" id="add-user-role"
-                                class="mt-3 inline-flex items-center px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">
-                            + Adicionar Usuário
-                        </button>
+                        <label for="user_id" class="block mb-1 font-medium text-zinc-700 dark:text-white">Usuário Responsável</label>
+                        <select name="user_id" id="user_id" required
+                                class="w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                            <option value="">Selecione um usuário</option>
+                            @foreach ($users as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
+                            @endforeach
+                        </select>
                     </div>
+
+                    <input type="hidden" name="role" value="dono">
 
                     <div class="pt-4">
                         <button type="submit"
