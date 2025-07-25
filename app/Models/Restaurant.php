@@ -22,29 +22,8 @@ class Restaurant extends Model
     /**
      * Usuários vinculados ao restaurante com seus respectivos cargos (roles).
      */
-    public function users(): BelongsToMany
+    public function users()
     {
-        return $this->belongsToMany(User::class)
-            ->withPivot('role')
-            ->withTimestamps();
-    }
-
-    /**
-     * Donos do restaurante.
-     */
-    /**
-     * Garçons do restaurante.
-     */
-    public function waiters(): BelongsToMany
-    {
-        return $this->users()->wherePivot('role', 'garcom');
-    }
-
-    /**
-     * Caixas do restaurante.
-     */
-    public function cashiers(): BelongsToMany
-    {
-        return $this->users()->wherePivot('role', 'caixa');
+        return $this->belongsToMany(User::class);
     }
 }

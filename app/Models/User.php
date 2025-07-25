@@ -63,11 +63,8 @@ class User extends Authenticatable
             ->implode('');
     }
 
-    public function restaurants(): BelongsToMany
+    public function restaurants()
     {
-        return $this->belongsToMany(Restaurant::class)
-            ->withPivot('role')
-            ->withTimestamps();
+        return $this->belongsToMany(Restaurant::class);
     }
-
 }
