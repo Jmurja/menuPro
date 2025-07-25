@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\RestaurantController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
 use App\Livewire\Settings\Appearance;
@@ -36,9 +37,15 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
         //End Users Region
 
+        //restaurants Region
+        Route::get('restaurants', [RestaurantController::class, 'index'])->name('restaurants.index');
+        Route::post('/restaurants', [RestaurantController::class, 'store'])->name('restaurants.store');
+        Route::get('/restaurants/{restaurant}/edit', [RestaurantController::class, 'edit'])->name('restaurants.edit');
+        Route::put('/restaurants/{restaurant}', [RestaurantController::class, 'update'])->name('restaurants.update');
+        Route::delete('/restaurants/{restaurant}', [RestaurantController::class, 'destroy'])->name('restaurants.destroy');
+        //End Restaurants Region
     });
 });
-
 
 
 require __DIR__.'/auth.php';

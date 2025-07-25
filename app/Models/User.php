@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -60,4 +61,12 @@ class User extends Authenticatable
             ->map(fn (string $name) => Str::substr($name, 0, 1))
             ->implode('');
     }
+
+    public function restaurants(): BelongsToMany
+    {
+        return $this->belongsToMany(Restaurant::class)
+            ->withPivot('role')
+            ->withTimestamps();
+    }
+
 }
