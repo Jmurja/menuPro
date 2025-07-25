@@ -15,14 +15,10 @@ class MenuController extends Controller
     {
         $user = Auth::user();
 
-        if (!in_array($user->role, [UserRole::DONO, UserRole::CAIXA])) {
-            abort(403, 'Acesso não autorizado.');
-        }
-
         $restaurant = $user->primaryRestaurant();
 
-        if (!$restaurant) {
-            return back()->with('error', 'Restaurante não vinculado.');
+        if (!$restaurant && $user->role === UserRole::ADMIN) {
+            return redirect()->route('restaurants.index');
         }
 
         $items = MenuItem::with('category')
