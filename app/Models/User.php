@@ -67,4 +67,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Restaurant::class);
     }
+
+    public function primaryRestaurant()
+    {
+        return $this->restaurants()->first();
+    }
 }
