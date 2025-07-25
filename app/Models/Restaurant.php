@@ -32,11 +32,6 @@ class Restaurant extends Model
     /**
      * Donos do restaurante.
      */
-    public function owners(): BelongsToMany
-    {
-        return $this->users()->wherePivot('role', 'dono');
-    }
-
     /**
      * Garçons do restaurante.
      */

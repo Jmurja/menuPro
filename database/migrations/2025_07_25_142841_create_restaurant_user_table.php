@@ -10,7 +10,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('restaurant_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->enum('role', ['dono', 'garcom', 'caixa'])->default('garcom');
+//            $table->string('role', ['dono', 'garcom', 'caixa'])->default('garcom');
             $table->timestamps();
 
             $table->unique(['restaurant_id', 'user_id']);

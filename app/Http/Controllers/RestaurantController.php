@@ -64,7 +64,7 @@ class RestaurantController extends Controller
             'is_active'    => $request->has('is_active'),
         ]);
 
-        $restaurant->users()->attach($validated['user_id'], ['role' => 'dono']);
+        $restaurant->users()->attach($validated['user_id']);
 
         return redirect()->route('restaurants.index')->with('success', 'Restaurante cadastrado com sucesso.');
     }
@@ -104,10 +104,7 @@ class RestaurantController extends Controller
             'is_active'    => $request->has('is_active'),
         ]);
 
-        $restaurant->users()->sync([
-            $validated['user_id'] => ['role' => 'dono']
-        ]);
-
+        $restaurant->users()->sync([$validated['user_id']]);
         return redirect()->route('restaurants.index')->with('success', 'Restaurante atualizado com sucesso.');
     }
 
