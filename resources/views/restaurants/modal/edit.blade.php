@@ -50,10 +50,17 @@
                         </div>
 
                         <div>
-                            <label class="block mb-2 font-medium text-zinc-700 dark:text-white">Responsável</label>
-                            <input type="text" disabled
-                                   value="{{ $restaurant->users->first()->name ?? 'Nenhum usuário vinculado' }}"
-                                   class="block w-full bg-gray-100 dark:bg-zinc-700 rounded-md border-zinc-300 dark:border-zinc-600 dark:text-white">
+                            <label for="user_id-{{ $restaurant->id }}" class="block mb-1 font-medium text-zinc-700 dark:text-white">Usuário Responsável</label>
+                            <select name="user_id" id="user_id-{{ $restaurant->id }}" required
+                                    class="w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                                <option value="">Selecione um usuário</option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}"
+                                        {{ $restaurant->users->first()?->id === $user->id ? 'selected' : '' }}>
+                                        {{ $user->name }} ({{ $user->email }})
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="pt-4">

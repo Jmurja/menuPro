@@ -58,6 +58,7 @@ class RestaurantController extends Controller
             'city'      => ['nullable', 'string', 'max:255'],
             'state'     => ['nullable', 'string', 'size:2'],
             'is_active' => ['nullable', 'boolean'],
+            'user_id'   => ['required', 'exists:users,id'],
         ]);
 
         $restaurant->update([
@@ -65,6 +66,10 @@ class RestaurantController extends Controller
             'city'      => $validated['city'] ?? null,
             'state'     => $validated['state'] ?? null,
             'is_active' => $request->has('is_active'),
+        ]);
+
+        $restaurant->users()->sync([
+            $validated['user_id'] => ['role' => 'dono']
         ]);
 
         return redirect()->route('restaurants.index')->with('success', 'Restaurante atualizado com sucesso.');
