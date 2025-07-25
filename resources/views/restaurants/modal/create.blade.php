@@ -64,36 +64,3 @@
         </div>
     </div>
 </div>
-
-@push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const addBtn = document.getElementById('add-user-role');
-            const container = document.getElementById('user-role-container');
-            let index = 1;
-
-            addBtn.addEventListener('click', () => {
-                const div = document.createElement('div');
-                div.classList.add('flex', 'items-center', 'gap-4');
-
-                div.innerHTML = `
-                <select name="users[${index}][id]" required
-                    class="w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
-                    <option value="">Selecione um usuário</option>
-                    @foreach ($users as $user)
-                <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
-                    @endforeach
-                </select>
-                <select name="users[${index}][role]" required
-                    class="w-48 rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
-                    <option value="dono">Dono</option>
-                    <option value="garcom">Garçom</option>
-                    <option value="caixa">Caixa</option>
-                </select>
-            `;
-                container.appendChild(div);
-                index++;
-            });
-        });
-    </script>
-@endpush

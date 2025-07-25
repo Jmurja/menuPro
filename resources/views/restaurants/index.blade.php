@@ -103,4 +103,6 @@
         @endif
     </div>
     @include('restaurants.modal.create')
+    @vite('resources/js/restaurant-user-role.js')
+
 </x-layouts.app>
