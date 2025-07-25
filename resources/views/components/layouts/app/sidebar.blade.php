@@ -7,7 +7,7 @@
 <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
     <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
-    <a href="{{ route('menu') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
+    <a href="{{ route('menu') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse">
         <x-app-logo />
     </a>
 
@@ -16,7 +16,13 @@
             <flux:navlist.item icon="book-open" :href="route('menu')" :current="request()->routeIs('menu')">
                 {{ __('Menu') }}
             </flux:navlist.item>
-
+            @can('admin-only')
+                <flux:navlist.group :heading="__('Painel do Admin')" class="mt-6">
+                    <flux:navlist.item icon="users" :href="route('users.index')" :current="request()->routeIs('users.index')">
+                        {{ __('Usuários') }}
+                    </flux:navlist.item>
+                </flux:navlist.group>
+            @endcan
         </flux:navlist.group>
     </flux:navlist>
 
