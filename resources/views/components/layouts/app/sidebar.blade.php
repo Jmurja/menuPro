@@ -16,10 +16,13 @@
             <flux:navlist.item icon="book-open" :href="route('menu')" :current="request()->routeIs('menu')">
                 {{ __('Menu') }}
             </flux:navlist.item>
-            <flux:navlist.item icon="users" :href="route('users.index')" :current="request()->routeIs('users.index')">
-                {{ __('Usuários') }}
-            </flux:navlist.item>
-
+            @can('admin-only')
+                <flux:navlist.group :heading="__('Painel do Admin')" class="mt-6">
+                    <flux:navlist.item icon="users" :href="route('users.index')" :current="request()->routeIs('users.index')">
+                        {{ __('Usuários') }}
+                    </flux:navlist.item>
+                </flux:navlist.group>
+            @endcan
         </flux:navlist.group>
     </flux:navlist>
 
