@@ -107,4 +107,5 @@
     @include('restaurants.modal.create')
     @include('restaurants.modal.edit')
     @vite('resources/js/viacep.js')
+    @vite('resources/js/cnpj-mask.js')
 </x-layouts.app>

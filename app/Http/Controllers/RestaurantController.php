@@ -33,7 +33,7 @@ class RestaurantController extends Controller
     {
         $validated = $request->validate([
             'name'         => ['required', 'string', 'max:255'],
-            'cnpj' => ['nullable', 'digits:14', 'unique:restaurants,cnpj'],
+            'cnpj' => ['nullable', 'unique:restaurants,cnpj'],
             'zip_code'     => ['nullable', 'string', 'max:9'],
             'street'       => ['nullable', 'string', 'max:255'],
             'number'       => ['nullable', 'string', 'max:50'],
@@ -46,6 +46,9 @@ class RestaurantController extends Controller
         ]);
         $validated['zip_code'] = isset($validated['zip_code'])
             ? preg_replace('/\D/', '', $validated['zip_code'])
+            : null;
+        $validated['cnpj'] = isset($validated['cnpj'])
+            ? preg_replace('/\D/', '', $validated['cnpj'])
             : null;
 
         $restaurant = Restaurant::create([
@@ -70,7 +73,7 @@ class RestaurantController extends Controller
     {
         $validated = $request->validate([
             'name'         => ['required', 'string', 'max:255'],
-            'cnpj' => ['nullable', 'digits:14', Rule::unique('restaurants', 'cnpj')->ignore($restaurant->id)],
+            'cnpj' => ['nullable', Rule::unique('restaurants', 'cnpj')->ignore($restaurant->id)],
             'zip_code'     => ['nullable', 'string', 'max:9'],
             'street'       => ['nullable', 'string', 'max:255'],
             'number'       => ['nullable', 'string', 'max:50'],
@@ -83,6 +86,9 @@ class RestaurantController extends Controller
         ]);
         $validated['zip_code'] = isset($validated['zip_code'])
             ? preg_replace('/\D/', '', $validated['zip_code'])
+            : null;
+        $validated['cnpj'] = isset($validated['cnpj'])
+            ? preg_replace('/\D/', '', $validated['cnpj'])
             : null;
 
         $restaurant->update([
