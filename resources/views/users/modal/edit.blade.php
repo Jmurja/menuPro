@@ -26,7 +26,7 @@
                     <div>
                         <label for="name-{{ $user->id }}"
                                class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Nome</label>
-                        <input type="text" name="name" id="name-{{ $user->id }}" value="{{ $user->name }}" required
+                        <input type="text" name="name" id="name-{{ $user->id }}" value="{{ $user->name }}" placeholder="Nome Completo" required
                                class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                     </div>
 
@@ -41,21 +41,21 @@
                     <div>
                         <label for="email-{{ $user->id }}"
                                class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Email</label>
-                        <input type="email" name="email" id="email-{{ $user->id }}" value="{{ $user->email }}" required
+                        <input type="email" name="email" id="email-{{ $user->id }}" value="{{ $user->email }}" placeholder="Email" required
                                class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                     </div>
 
                     <div>
                         <label for="phone-{{ $user->id }}"
                                class="block mb-1 font-medium text-zinc-700 dark:text-white">Telefone</label>
-                        <input type="text" name="phone" id="phone-{{ $user->id }}" value="{{ $user->phone }}"
+                        <input type="text" name="phone" id="phone-{{ $user->id }}" value="{{ $user->phone }}" placeholder="Telefone"
                                class="phone-input mt-1 block w-full rounded-md border-zinc-300 shadow-sm dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                     </div>
 
                     <div>
                         <label for="role-{{ $user->id }}"
                                class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Cargo</label>
-                        <select name="role" id="role-{{ $user->id }}"
+                        <select name="role" id="role-{{ $user->id }}" required
                                 class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                             @foreach(UserRole::options() as $option)
                                 <option

@@ -24,7 +24,7 @@
 
                     <div>
                         <label for="name" class="block mb-1 font-medium text-zinc-700 dark:text-white">Nome do Restaurante *</label>
-                        <input type="text" name="name" id="name" required
+                        <input type="text" name="name" id="name" required placeholder="Restaurante"
                                class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                     </div>
                   <div>
@@ -36,46 +36,46 @@
 
                     <div>
                         <label for="zip_code" class="block mb-1 font-medium text-zinc-700 dark:text-white">CEP</label>
-                        <input type="text" name="zip_code" id="zip_code" maxlength="9"
+                        <input type="text" name="zip_code" id="zip_code" maxlength="9" placeholder="00000-000"
                                class="cep-mask mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                     </div>
 
                     <div>
                         <label for="street" class="block mb-1 font-medium text-zinc-700 dark:text-white">Rua</label>
-                        <input type="text" name="street" id="street"
+                        <input type="text" name="street" id="street" placeholder="Rua"
                                class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label for="number" class="block mb-1 font-medium text-zinc-700 dark:text-white">Número</label>
-                            <input type="text" name="number" id="number"
+                            <input type="text" name="number" id="number" placeholder="000"
                                    class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                         </div>
 
                         <div>
                             <label for="complement" class="block mb-1 font-medium text-zinc-700 dark:text-white">Complemento</label>
-                            <input type="text" name="complement" id="complement"
+                            <input type="text" name="complement" id="complement" placeholder="Complemento"
                                    class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                         </div>
                     </div>
 
                     <div>
                         <label for="neighborhood" class="block mb-1 font-medium text-zinc-700 dark:text-white">Bairro</label>
-                        <input type="text" name="neighborhood" id="neighborhood"
+                        <input type="text" name="neighborhood" id="neighborhood" placeholder="Bairro"
                                class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label for="city" class="block mb-1 font-medium text-zinc-700 dark:text-white">Cidade</label>
-                            <input type="text" name="city" id="city"
+                            <input type="text" name="city" id="city" placeholder="Cidade"
                                    class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                         </div>
 
                         <div>
                             <label for="state" class="block mb-1 font-medium text-zinc-700 dark:text-white">Estado (UF)</label>
-                            <input type="text" name="state" id="state" maxlength="2"
+                            <input type="text" name="state" id="state" maxlength="2" placeholder="UF"
                                    class="uppercase mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                         </div>
                     </div>

@@ -25,13 +25,13 @@
 
                     <div>
                         <label for="name" class="block mb-1 font-medium text-zinc-700 dark:text-white">Nome *</label>
-                        <input type="text" name="name" id="name" required
+                        <input type="text" name="name" id="name" required placeholder="Nome Completo"
                                class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                     </div>
 
                     <div>
                         <label for="email" class="block mb-1 font-medium text-zinc-700 dark:text-white">Email *</label>
-                        <input type="email" name="email" id="email" required
+                        <input type="email" name="email" id="email" required placeholder="Email"
                                class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                     </div>
 
@@ -45,21 +45,21 @@
                     <div>
                         <label for="phone"
                                class="block mb-1 font-medium text-zinc-700 dark:text-white">Telefone</label>
-                        <input type="text" name="phone" id="phone"
+                        <input type="text" name="phone" id="phone" placeholder="Telefone"
                                class="phone-input mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white" value="{{ old('phone') }}">
                     </div>
 
                     <div>
                         <label for="password" class="block mb-1 font-medium text-zinc-700 dark:text-white">Senha
                             *</label>
-                        <input type="password" name="password" id="password" required
+                        <input type="password" name="password" id="password" required placeholder="Senha"
                                class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                     </div>
 
                     <div>
                         <label for="password_confirmation" class="block mb-1 font-medium text-zinc-700 dark:text-white">Confirmar
                             Senha *</label>
-                        <input type="password" name="password_confirmation" id="password_confirmation" required
+                        <input type="password" name="password_confirmation" id="password_confirmation" required placeholder="Confirmar Senha"
                                class="mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
                     </div>
 
