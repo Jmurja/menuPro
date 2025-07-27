@@ -32,47 +32,53 @@ class MenuController extends Controller
         return view('menu.index', compact('items', 'categories'));
     }
 
-    public function publicMenu(Request $request)
-    {
-        $query = MenuItem::with('category')->where('is_active', true);
+    public function publicMenu(Request $request, $restaurant)
+{
+     $restaurant = \App\Models\Restaurant::findOrFail($restaurant);
 
-        if ($request->has('search')) {
-            $search = $request->input('search');
-            $query->where(function($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('description', 'like', "%{$search}%");
-            });
-        }
+    $query = MenuItem::with('category')
+        ->where('restaurant_id', $restaurant->id)
+        ->where('is_active', true);
 
-        if ($request->has('category')) {
-            $categoryId = $request->input('category');
-            $query->where('category_id', $categoryId);
-        }
-
-        $currentTime = now()->format('H:i:s');
-        $query->where(function($q) use ($currentTime) {
-            $q->whereNull('availability_start_time')
-                ->orWhereNull('availability_end_time')
-                ->orWhere(function($q) use ($currentTime) {
-                    $q->where('availability_start_time', '<=', $currentTime)
-                        ->where('availability_end_time', '>=', $currentTime);
-                });
+    if ($request->has('search')) {
+        $search = $request->input('search');
+        $query->where(function($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%");
         });
-
-        $query->where(function($q) {
-            $q->whereNull('stock_quantity')
-                ->orWhere('stock_quantity', '>', 0);
-        });
-
-        $items = $query->get()->groupBy(function ($item) {
-            return $item->category->name ?? 'Sem Categoria';
-        });
-
-        $categories = Category::orderBy('name')->get();
-        $whatsappNumber = '5511999999999';
-
-        return view('menu.public', compact('items', 'categories', 'whatsappNumber', 'request'));
     }
+
+    if ($request->has('category')) {
+        $categoryId = $request->input('category');
+        $query->where('category_id', $categoryId);
+    }
+
+    $currentTime = now()->format('H:i:s');
+    $query->where(function($q) use ($currentTime) {
+        $q->whereNull('availability_start_time')
+          ->orWhereNull('availability_end_time')
+          ->orWhere(function($q) use ($currentTime) {
+              $q->where('availability_start_time', '<=', $currentTime)
+                ->where('availability_end_time', '>=', $currentTime);
+          });
+    });
+
+    $query->where(function($q) {
+        $q->whereNull('stock_quantity')
+          ->orWhere('stock_quantity', '>', 0);
+    });
+
+    $items = $query->get()->groupBy(fn ($item) => $item->category->name ?? 'Sem Categoria');
+
+    $categories = Category::where('restaurant_id', $restaurant->id)
+                          ->orderBy('name')
+                          ->get();
+
+    $whatsappNumber = $restaurant->whatsapp ?? '5511999999999'; // Exemplo
+
+    return view('menu.public', compact('items', 'categories', 'whatsappNumber', 'restaurant', 'request'));
+}
+
 
     public function show($id)
     {
@@ -202,4 +208,12 @@ class MenuController extends Controller
 
         return back()->with('success', 'Categoria criada com sucesso!');
     }
+
+    // pagina inicial sem menu
+    public function home()
+    {
+        $restaurants = \App\Models\Restaurant::orderBy('name')->get();
+        return view('home', compact('restaurants'));
+    }
+
 }

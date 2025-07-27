@@ -10,7 +10,9 @@ use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use App\Http\Controllers\UserController;
 
-Route::get('/', [MenuController::class, 'publicMenu'])->name('home');
+Route::get('/', [MenuController::class, 'home'])->name('home');
+Route::get('/menu/{restaurant}', [MenuController::class, 'publicMenu'])->name('menu.public');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
