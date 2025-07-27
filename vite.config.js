@@ -1,8 +1,8 @@
+import tailwindcss from "@tailwindcss/vite";
+import laravel from 'laravel-vite-plugin';
 import {
     defineConfig
 } from 'vite';
-import laravel from 'laravel-vite-plugin';
-import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
     plugins: [
@@ -14,8 +14,9 @@ export default defineConfig({
                 'resources/js/cart.js',
                 'resources/js/darkMode.js',
                 'resources/js/format-phone.js',
-                'resources/js/restaurant-user-role.js',
                 'resources/js/viacep.js',
+                'resources/js/cpf-mask.js',
+                'resources/js/cnpj-mask.js',
             ],
             refresh: true,
         }),
