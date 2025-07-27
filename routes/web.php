@@ -9,6 +9,7 @@ use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WaiterController;
 
 Route::get('/', [MenuController::class, 'home'])->name('home');
 Route::get('/menu/{restaurant}', [MenuController::class, 'publicMenu'])->name('menu.public');
@@ -57,6 +58,10 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/owner/restaurants/{restaurant}/employees/{user}', [MyRestaurantController::class, 'updateEmployee'])->name('owner.employees.update');
         Route::delete('/owner/restaurants/{restaurant}/employees/{user}', [MyRestaurantController::class, 'destroyEmployee'])->name('owner.employees.destroy');
         // end my restaurants region
+    });
+
+    Route::middleware(['auth', 'can:waiter-only'])->group(function () {
+        Route::get('/garcom/pedidos', [WaiterController::class, 'ordersIndex'])->name('waiter.orders.index');
     });
 });
 
