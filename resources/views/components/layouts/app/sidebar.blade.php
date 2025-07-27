@@ -36,6 +36,14 @@
                     </flux:navlist.item>
                 </flux:navlist.group>
             @endcan
+
+            @can('waiter-only')
+                <flux:navlist.group :heading="__('Garçom')" class="mt-6">
+                    <flux:navlist.item icon="clipboard-list" :href="route('waiter.orders.index')" :current="request()->routeIs('waiter.orders.*')">
+                        {{ __('Pedidos') }}
+                    </flux:navlist.item>
+                </flux:navlist.group>
+            @endcan
         </flux:navlist.group>
     </flux:navlist>
 
