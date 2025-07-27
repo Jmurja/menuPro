@@ -21,4 +21,9 @@ class UserPolicy
     {
         return $user->role === UserRole::DONO;
     }
+
+    public function isWaiter(User $user): bool
+    {
+        return $user->role === UserRole::GARCOM;
+    }
 }
