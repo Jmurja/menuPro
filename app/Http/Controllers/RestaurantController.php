@@ -14,10 +14,11 @@ class RestaurantController extends Controller
         $query = Restaurant::query();
 
         if ($search = $request->input('search')) {
-            $query->where('name', 'like', "%{$search}%");
+            $query->where('name', 'like', "%{$search}%")
+                ->orWhere('city', 'like', "%{$search}%");
         }
 
-        $restaurants = $query->orderBy('name')->get();
+        $restaurants = $query->orderBy('name')->paginate(10)->withQueryString();
         $users = User::all();
 
         return view('restaurants.index', compact('restaurants', 'users'));

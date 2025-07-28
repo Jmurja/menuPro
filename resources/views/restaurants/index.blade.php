@@ -52,7 +52,7 @@
             </button>
         </div>
 
-        @if ($restaurants->isEmpty())
+        @if ($restaurants->count() === 0)
             <p class="text-zinc-500 dark:text-zinc-400">Nenhum restaurante cadastrado.</p>
         @else
             <div class="overflow-x-auto">
@@ -101,6 +101,9 @@
                     @endforeach
                     </tbody>
                 </table>
+                <div class="mt-6">
+                    {{ $restaurants->links() }}
+                </div>
             </div>
         @endif
     </div>
