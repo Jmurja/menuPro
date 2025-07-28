@@ -88,8 +88,9 @@ class UserController extends Controller
     public function restore($id)
     {
         $user = User::onlyTrashed()->findOrFail($id);
+        $user->is_active = true;
         $user->restore();
 
-        return redirect()->route('users.index')->with('success', 'Usuário restaurado com sucesso.');
+        return redirect()->route('users.index')->with('success', 'Usuário restaurado e reativado com sucesso.');
     }
 }
