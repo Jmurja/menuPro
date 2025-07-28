@@ -44,6 +44,15 @@
                     </flux:navlist.item>
                 </flux:navlist.group>
             @endcan
+
+                @can('cashier-only')
+                    <flux:navlist.group :heading="__('Caixa')" class="mt-6">
+                        <flux:navlist.item icon="banknotes" :href="route('cashier.index')" :current="request()->routeIs('cashier.*')">
+                            {{ __('Caixa') }}
+                        </flux:navlist.item>
+                    </flux:navlist.group>
+                @endcan
+
         </flux:navlist.group>
     </flux:navlist>
 
@@ -147,6 +156,18 @@
                     @can('owner-only')
                         <flux:menu.item :href="route('my_restaurants.index')" icon="building-storefront">
                             {{ __('Meu Restaurante') }}
+                        </flux:menu.item>
+                    @endcan
+
+                    @can('waiter-only')
+                        <flux:menu.item :href="route('waiter.orders.index')" icon="clipboard-document-check">
+                            {{ __('Pedidos') }}
+                        </flux:menu.item>
+                    @endcan
+
+                    @can('cashier-only')
+                        <flux:menu.item :href="route('cashier.index')" icon="banknotes">
+                            {{ __('Caixa') }}
                         </flux:menu.item>
                     @endcan
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CashierController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MyRestaurantController;
 use App\Http\Controllers\RestaurantController;
@@ -62,6 +63,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['auth', 'can:waiter-only'])->group(function () {
         Route::get('/garcom/pedidos', [WaiterController::class, 'ordersIndex'])->name('waiter.orders.index');
+    });
+
+    Route::middleware(['auth', 'can:cashier-only'])->group(function () {
+        Route::get('/caixa', [CashierController::class, 'index'])->name('cashier.index');
+        Route::post('/caixa/fechar-conta', [CashierController::class, 'closeTab'])->name('cashier.close');
     });
 });
 
