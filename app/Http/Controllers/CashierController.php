@@ -75,4 +75,39 @@ class CashierController extends Controller
 
         return response()->json(['tables' => $result]);
     }
+
+    public function accountSummary(Request $request)
+    {
+        $restaurant = Auth::user()->primaryRestaurant();
+
+        $orders = Order::with('items.menuItem')
+            ->where('restaurant_id', $restaurant->id)
+            ->where('table', $request->table)
+            ->where('status', 'aberto')
+            ->get();
+
+        $items = [];
+        $total = 0;
+
+        foreach ($orders as $order) {
+            foreach ($order->items as $item) {
+                $key = $item->menu_item_id;
+                if (!isset($items[$key])) {
+                    $items[$key] = [
+                        'name' => $item->menuItem->name,
+                        'quantity' => 0,
+                        'total' => 0
+                    ];
+                }
+                $items[$key]['quantity'] += $item->quantity;
+                $items[$key]['total'] += $item->quantity * $item->price;
+                $total += $item->quantity * $item->price;
+            }
+        }
+
+        return response()->json([
+            'items' => array_values($items),
+            'total' => $total,
+        ]);
+    }
 }

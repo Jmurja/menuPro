@@ -68,9 +68,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['auth', 'can:cashier-only'])->group(function () {
         Route::get('/caixa', [CashierController::class, 'index'])->name('cashier.index');
-        Route::get('/caixa/pedidos-abertos', [CashierController::class, 'fetchOpenOrders'])
-            ->middleware(['auth', 'can:cashier-only'])
-            ->name('cashier.open-orders');
+        Route::get('/caixa/pedidos-abertos', [CashierController::class, 'fetchOpenOrders'])->name('cashier.open-orders');
+        Route::get('/caixa/resumo-da-conta', [CashierController::class, 'accountSummary'])->name('cashier.summary');
         Route::post('/caixa/fechar-conta', [CashierController::class, 'closeTab'])->name('cashier.close');
     });
 });
