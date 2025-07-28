@@ -63,6 +63,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['auth', 'can:waiter-only'])->group(function () {
         Route::get('/garcom/pedidos', [WaiterController::class, 'ordersIndex'])->name('waiter.orders.index');
+        Route::post('/orders', [WaiterController::class, 'store'])->middleware('can:waiter-only')->name('orders.store');
     });
 
     Route::middleware(['auth', 'can:cashier-only'])->group(function () {

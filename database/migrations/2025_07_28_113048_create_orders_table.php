@@ -12,6 +12,8 @@ return new class extends Migration
     public function up(): void {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // <-- novo
+            $table->boolean('is_closed')->default(false); // <-- novo
             $table->foreignId('restaurant_id')->constrained()->cascadeOnDelete();
             $table->string('table'); // ex: A01, B10
             $table->string('status')->default('aberto'); // aberto | fechado

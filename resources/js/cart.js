@@ -64,12 +64,31 @@ function submitOrder() {
         return;
     }
 
-    console.log('Pedido enviado:', { table, items: cart });
-
-    alert('Pedido enviado com sucesso! (Simulado)');
-    cart = [];
-    renderCart();
-    document.getElementById('table').value = '';
+    fetch('/orders', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+        },
+        body: JSON.stringify({
+            table: table,
+            items: cart,
+        }),
+    })
+        .then(response => {
+            if (!response.ok) throw new Error('Erro ao enviar pedido');
+            return response.json();
+        })
+        .then(data => {
+            alert(data.message);
+            cart = [];
+            renderCart();
+            document.getElementById('table').value = '';
+        })
+        .catch(error => {
+            console.error(error);
+            alert('Erro ao enviar pedido');
+        });
 }
 
 // Inicialização dos botões ao carregar a página
