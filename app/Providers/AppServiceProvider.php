@@ -23,5 +23,6 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('admin-only', [UserPolicy::class, 'isAdmin']);
         Gate::define('owner-only', [UserPolicy::class, 'isOwner']);
         Gate::define('waiter-only', [UserPolicy::class, 'isWaiter']);
+        Gate::define('cashier-only', [UserPolicy::class, 'iscashier']);
     }
 }
