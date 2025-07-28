@@ -79,8 +79,10 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        $user->is_active = false;
+        $user->save();
         $user->delete();
-        return redirect()->back()->with('success', 'Usuário excluído.');
+        return redirect()->back()->with('success', 'Usuário desativado e excluído.');
     }
 
     public function restore($id)
