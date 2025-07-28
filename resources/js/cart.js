@@ -80,7 +80,7 @@ function submitOrder() {
             return response.json();
         })
         .then(data => {
-            alert(data.message);
+            showToast('Pedido enviado com sucesso!');
             cart = [];
             renderCart();
             document.getElementById('table').value = '';
@@ -89,7 +89,19 @@ function submitOrder() {
             console.error(error);
             alert('Erro ao enviar pedido');
         });
-}
+    }
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.remove('hidden');
+        toast.classList.add('opacity-100');
+
+        setTimeout(() => {
+            toast.classList.add('opacity-0');
+            toast.classList.remove('opacity-100');
+            setTimeout(() => toast.classList.add('hidden'), 300);
+        }, 2000);
+    }
 
 // Inicialização dos botões ao carregar a página
 document.addEventListener('DOMContentLoaded', () => {

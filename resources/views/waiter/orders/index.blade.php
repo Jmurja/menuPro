@@ -38,21 +38,29 @@
     </div>
 
     {{-- Carrinho flutuante --}}
-    <div id="cart" class="fixed bottom-4 right-4 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 shadow-lg rounded-lg w-80 p-4 hidden">
+    <div id="cart" class="fixed bottom-4 right-4 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 shadow-lg rounded-lg w-80 p-4 hidden transition-all duration-300">
         <h2 class="text-xl font-bold mb-3 text-zinc-800 dark:text-white">Carrinho</h2>
-        <ul id="cart-items" class="space-y-2 text-sm text-zinc-700 dark:text-zinc-300"></ul>
+        <ul id="cart-items" class="space-y-2 text-sm text-zinc-700 dark:text-zinc-300 max-h-48 overflow-y-auto pr-1"></ul>
 
-        <div class="mt-3">
-            <label for="table" class="block text-sm mb-1">Mesa:</label>
-            <input type="text" id="table" name="table" class="w-full border rounded px-2 py-1 text-sm dark:bg-zinc-800 dark:border-zinc-600 dark:text-white">
+        <div class="mt-4">
+            <label for="table" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">Mesa:</label>
+            <input type="text" id="table" name="table" class="w-full border rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 dark:bg-zinc-800 dark:border-zinc-600 dark:text-white">
         </div>
 
-        <p class="mt-3 font-semibold text-green-700 dark:text-green-400">Total: R$ <span id="cart-total">0,00</span></p>
+        <p class="mt-4 font-semibold text-green-700 dark:text-green-400 text-right">
+            Total: R$ <span id="cart-total">0,00</span>
+        </p>
 
-        <button onclick="submitOrder()" class="mt-4 w-full px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+        <button onclick="submitOrder()" class="mt-4 w-full px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition">
             Enviar Pedido
         </button>
     </div>
+
+    {{-- Toast de confirmação --}}
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden bg-green-600 text-white px-4 py-2 rounded-lg shadow-md">
+        Pedido enviado com sucesso!
+    </div>
+
 </x-layouts.app>
 
 @vite('resources/js/cart.js')
