@@ -17,6 +17,7 @@ export default defineConfig({
                 'resources/js/viacep.js',
                 'resources/js/cpf-mask.js',
                 'resources/js/cnpj-mask.js',
+                'resources/js/cashier.js',
             ],
             refresh: true,
         }),

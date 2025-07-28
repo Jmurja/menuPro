@@ -41,4 +41,38 @@ class CashierController extends Controller
 
         return back()->with('success', 'Conta da mesa ' . $request->table . ' foi fechada com sucesso!');
     }
+
+    public function fetchOpenOrders()
+    {
+        $restaurant = Auth::user()->primaryRestaurant();
+
+        $orders = Order::with('items.menuItem')
+            ->where('restaurant_id', $restaurant->id)
+            ->where('status', 'aberto')
+            ->orderBy('created_at', 'asc')
+            ->get()
+            ->groupBy('table');
+
+        $result = [];
+
+        foreach ($orders as $table => $tableOrders) {
+            $result[] = [
+                'table' => $table,
+                'orders' => $tableOrders->map(function ($order) {
+                    return [
+                        'id' => $order->id,
+                        'created_at' => $order->created_at->format('H:i'),
+                        'items' => $order->items->map(function ($item) {
+                            return [
+                                'name' => $item->menuItem->name,
+                                'quantity' => $item->quantity,
+                            ];
+                        }),
+                    ];
+                })->values(),
+            ];
+        }
+
+        return response()->json(['tables' => $result]);
+    }
 }
