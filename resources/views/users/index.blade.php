@@ -50,8 +50,8 @@
                 Adicionar Novo Usuário
             </button>
         </div>
-        @if ($users->isEmpty())
-            <p class="text-zinc-500 dark:text-zinc-400">Nenhum usuário cadastrado.</p>
+        @if ($users->count() === 0)
+        <p class="text-zinc-500 dark:text-zinc-400">Nenhum usuário cadastrado.</p>
         @else
             <div class="overflow-x-auto">
                 <table class="min-w-full table-auto text-sm text-left text-zinc-500 dark:text-zinc-400">
@@ -105,6 +105,9 @@
                     @endforeach
                     </tbody>
                 </table>
+                <div class="mt-6">
+                    {{ $users->links() }}
+                </div>
             </div>
         @endif
     </div>

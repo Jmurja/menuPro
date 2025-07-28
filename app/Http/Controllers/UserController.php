@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use App\Enums\UserRole;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $query = User::query();
 
@@ -21,7 +22,7 @@ class UserController extends Controller
             });
         }
 
-        $users = $query->orderBy('name')->get();
+        $users = $query->orderBy('name')->paginate(10)->withQueryString();
 
         return view('users.index', compact('users'));
     }
