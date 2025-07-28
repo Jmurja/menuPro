@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('menu_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('restaurant_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('restrict');
             $table->string('name');
             $table->text('description')->nullable();
             $table->decimal('price', 8, 2);
+            $table->integer('stock_quantity')->nullable();
+            $table->time('availability_start_time')->nullable();
+            $table->time('availability_end_time')->nullable();
             $table->string('image_url')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
