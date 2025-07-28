@@ -14,6 +14,9 @@ class UserController extends Controller
     {
         $query = User::query();
 
+        if ($request->boolean('trashed')) {
+            $query->onlyTrashed();
+        }
         if ($search = $request->input('search')) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
@@ -21,9 +24,7 @@ class UserController extends Controller
                     ->orWhere('role', 'like', "%{$search}%");
             });
         }
-
         $users = $query->orderBy('name')->paginate(10)->withQueryString();
-
         return view('users.index', compact('users'));
     }
 
@@ -80,5 +81,13 @@ class UserController extends Controller
     {
         $user->delete();
         return redirect()->back()->with('success', 'Usuário excluído.');
+    }
+
+    public function restore($id)
+    {
+        $user = User::onlyTrashed()->findOrFail($id);
+        $user->restore();
+
+        return redirect()->route('users.index')->with('success', 'Usuário restaurado com sucesso.');
     }
 }
