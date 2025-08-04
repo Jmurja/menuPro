@@ -1,86 +1,138 @@
 <x-layouts.app :title="__('Menu')">
-    <div class="py-10 px-4 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold text-zinc-900 dark:text-white mb-6">Cardápio</h1>
+    <div class="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <!-- Header Section with Restaurant Branding -->
+        <div class="mb-8 text-center">
+            <h1 class="text-4xl font-bold text-zinc-900 dark:text-white mb-2">Cardápio</h1>
+            <p class="text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto">Descubra nossa seleção de pratos preparados com ingredientes frescos e de alta qualidade</p>
+        </div>
 
-        <button data-modal-target="create-menu-modal" data-modal-toggle="create-menu-modal"
-                class="mb-6 inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800">
-            Adicionar Novo Item
-        </button>
+        <!-- Admin Controls -->
+        <div class="flex flex-wrap justify-center gap-4 mb-10">
+            <button data-modal-target="create-menu-modal" data-modal-toggle="create-menu-modal"
+                    class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 shadow-sm transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                Adicionar Novo Item
+            </button>
 
-        <button data-modal-target="create-category-modal" data-modal-toggle="create-category-modal"
-                class="mb-6 inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800">
-            Adicionar Nova Categoria
-        </button>
+            <button data-modal-target="create-category-modal" data-modal-toggle="create-category-modal"
+                    class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800 shadow-sm transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+                Adicionar Nova Categoria
+            </button>
+        </div>
 
-        {{-- Agrupado por categoria --}}
+        <!-- Menu Categories -->
         @forelse($items as $categoryName => $categoryItems)
-            <h2 class="text-2xl font-semibold text-zinc-800 dark:text-white mt-10 mb-4">{{ $categoryName }}</h2>
+            <div class="mb-16">
+                <div class="relative mb-8">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-zinc-200 dark:border-zinc-700"></div>
+                    </div>
+                    <div class="relative flex justify-center">
+                        <h2 class="px-6 py-2 text-2xl font-bold text-zinc-900 dark:text-white bg-white dark:bg-zinc-800">
+                            {{ $categoryName }}
+                        </h2>
+                    </div>
+                </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach($categoryItems as $item)
-                    <div class="max-w-sm bg-white border border-zinc-200 rounded-lg shadow-sm dark:bg-zinc-800 dark:border-zinc-700">
-                        <button data-modal-target="modal-{{ $item->id }}" data-modal-toggle="modal-{{ $item->id }}" type="button" class="w-full">
-                            @if ($item->image_url)
-                                <img class="rounded-t-lg w-full h-48 object-cover" src="{{ $item->image_url }}" alt="{{ $item->name }}">
-                            @else
-                                <div class="flex items-center justify-center h-48 bg-zinc-300 rounded-t-sm dark:bg-zinc-700">
-                                    <svg class="w-10 h-10 text-zinc-200 dark:text-zinc-600" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
-                                        <path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z"/>
-                                        <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z"/>
-                                    </svg>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    @foreach($categoryItems as $item)
+                        <div class="bg-white dark:bg-zinc-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 border border-zinc-200 dark:border-zinc-700 flex flex-col h-full">
+                            <div class="relative">
+                                <button data-modal-target="modal-{{ $item->id }}" data-modal-toggle="modal-{{ $item->id }}" type="button" class="w-full">
+                                    @if ($item->image_url)
+                                        <img class="w-full h-56 object-cover" src="{{ $item->image_url }}" alt="{{ $item->name }}">
+                                    @else
+                                        <div class="flex items-center justify-center h-56 bg-gradient-to-r from-amber-100 to-amber-200 dark:from-amber-900/30 dark:to-amber-800/30">
+                                            <svg class="w-16 h-16 text-amber-500/70 dark:text-amber-400/70" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </div>
+                                    @endif
+
+                                    @if(!$item->is_active)
+                                        <div class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                                            Indisponível
+                                        </div>
+                                    @endif
+                                </button>
+                            </div>
+
+                            <div class="p-6 flex-grow flex flex-col">
+                                <h3 class="text-xl font-bold text-zinc-900 dark:text-white mb-2">{{ $item->name }}</h3>
+
+                                <p class="text-zinc-600 dark:text-zinc-400 mb-4 line-clamp-2 flex-grow">
+                                    {{ $item->description ?: 'Sem descrição disponível' }}
+                                </p>
+
+                                <div class="mt-auto">
+                                    <p class="text-2xl font-bold text-amber-600 dark:text-amber-400 mb-4">
+                                        R$ {{ number_format($item->price, 2, ',', '.') }}
+                                    </p>
+
+                                    <div class="flex flex-wrap gap-2">
+                                        <button data-modal-target="modal-{{ $item->id }}" data-modal-toggle="modal-{{ $item->id }}"
+                                                class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-white bg-amber-600 rounded-lg hover:bg-amber-700 focus:ring-4 focus:ring-amber-300 dark:bg-amber-500 dark:hover:bg-amber-600 dark:focus:ring-amber-700 transition-colors">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            Detalhes
+                                        </button>
+
+                                        <button data-modal-target="edit-modal-{{ $item->id }}" data-modal-toggle="edit-modal-{{ $item->id }}"
+                                                class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-700 transition-colors">
+                                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+                                            Editar
+                                        </button>
+
+                                        <form action="{{ route('menu.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este item?');" class="inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                    class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-700 transition-colors">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                                Excluir
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
-                            @endif
-                        </button>
-
-                        <div class="p-5">
-                            <h5 class="mb-2 text-xl font-bold tracking-tight text-zinc-900 dark:text-white">{{ $item->name }}</h5>
-                            <p class="mb-3 text-zinc-700 dark:text-zinc-400">{{ $item->description }}</p>
-                            <p class="mb-4 text-lg font-semibold text-green-700 dark:text-green-400">
-                                R$ {{ number_format($item->price, 2, ',', '.') }}
-                            </p>
-
-                            <div class="flex flex-wrap gap-2">
-                                {{-- Detalhes --}}
-                                <button data-modal-target="modal-{{ $item->id }}" data-modal-toggle="modal-{{ $item->id }}"
-                                        class="inline-flex cursor-pointer items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                    Detalhes
-                                </button>
-
-                                {{-- Editar --}}
-                                <button data-modal-target="edit-modal-{{ $item->id }}" data-modal-toggle="edit-modal-{{ $item->id }}"
-                                        class="inline-flex cursor-pointer items-center px-3 py-2 text-sm font-medium text-white bg-yellow-500 rounded-lg hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:bg-yellow-400 dark:hover:bg-yellow-500 dark:focus:ring-yellow-600">
-                                    <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
-                                    </svg>
-                                </button>
-
-                                {{-- Excluir --}}
-                                <form action="{{ route('menu.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este item?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                            class="inline-flex items-center cursor-pointer px-3 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-700">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                        </svg>
-                                    </button>
-                                </form>
                             </div>
                         </div>
-                    </div>
 
-                    @include('menu.modal.edit')
-                    @include('menu.modal.show')
-                @endforeach
+                        @include('menu.modal.edit')
+                        @include('menu.modal.show')
+                    @endforeach
+                </div>
             </div>
         @empty
-            <p class="text-zinc-500 dark:text-zinc-400">Nenhum item no cardápio.</p>
+            <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-md p-12 text-center border border-zinc-200 dark:border-zinc-700">
+                <div class="flex justify-center mb-4">
+                    <svg class="w-20 h-20 text-zinc-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-medium text-zinc-900 dark:text-white mb-2">Nenhum item no cardápio</h3>
+                <p class="text-zinc-500 dark:text-zinc-400 mb-6">Adicione itens ao cardápio para que eles apareçam aqui.</p>
+                <button data-modal-target="create-menu-modal" data-modal-toggle="create-menu-modal"
+                        class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 shadow-sm transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    Adicionar Primeiro Item
+                </button>
+            </div>
         @endforelse
     </div>
 
     @include('menu.modal.createItem')
     @include('menu.modal.createCategory')
-    @vite('resources/js/validate-menu-create.js')
+    @vite(['resources/js/validate-menu-create.js', 'resources/js/modal-validation.js'])
 </x-layouts.app>
