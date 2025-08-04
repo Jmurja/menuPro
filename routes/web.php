@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MyRestaurantController;
 use App\Http\Controllers\RestaurantController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,7 @@ use App\Http\Controllers\WaiterController;
 Route::get('/', [MenuController::class, 'home'])->name('home');
 Route::get('/menu/{restaurant}', [MenuController::class, 'publicMenu'])->name('menu.public');
 
+Route::get('/dev-login', LoginController::class)->name('dev-login');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

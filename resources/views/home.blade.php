@@ -12,6 +12,12 @@
     <header class="bg-white shadow-md py-4">
         <div class="max-w-6xl mx-auto px-4">
             <h1 class="text-2xl font-bold">🍽️ MenuPro</h1>
+            <a href="{{ route('login') }}" class="text-blue-600 hover:underline float-right">
+                Entrar
+                <svg xmlns="http://www.w3.org/2000/svg" class="inline-block w-5 h-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l7-7m0 0l-7-7m7 7H3" />
+                </svg>
+            </a>
         </div>
     </header>
 
