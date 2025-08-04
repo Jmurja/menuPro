@@ -31,6 +31,6 @@ class LoginController extends Controller
         // 🚀 Faz login e redireciona para o dashboard
         auth()->login($user);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('menu');
     }
 }
