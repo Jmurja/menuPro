@@ -17,6 +17,15 @@
             <flux:navlist.item icon="book-open" :href="route('menu')" :current="request()->routeIs('menu')">
                 {{ __('Menu') }}
             </flux:navlist.item>
+            <flux:navlist.item icon="tag" :href="route('categories.index')" :current="request()->routeIs('categories.*')">
+                {{ __('Categorias') }}
+            </flux:navlist.item>
+            <flux:navlist.item icon="sparkles" :href="route('promotions.index')" :current="request()->routeIs('promotions.*')">
+                {{ __('Promoções') }}
+            </flux:navlist.item>
+            <flux:navlist.item icon="clipboard-document-list" :href="route('waiter.orders.index')" :current="request()->routeIs('waiter.orders.*')">
+                {{ __('Pedidos') }}
+            </flux:navlist.item>
             @endcannot
             @can('admin-only')
                 <flux:navlist.group :heading="__('Painel do Admin')" class="mt-6">
@@ -145,6 +154,15 @@
                     <flux:navlist.item icon="book-open" :href="route('menu')" :current="request()->routeIs('menu')">
                         {{ __('Menu') }}
                     </flux:navlist.item>
+                    <flux:menu.item :href="route('categories.index')" icon="tag">
+                        {{ __('Categorias') }}
+                    </flux:menu.item>
+                    <flux:menu.item :href="route('promotions.index')" icon="sparkles">
+                        {{ __('Promoções') }}
+                    </flux:menu.item>
+                    <flux:menu.item :href="route('waiter.orders.index')" icon="clipboard-document-list">
+                        {{ __('Pedidos') }}
+                    </flux:menu.item>
                     @can('admin-only')
                         <flux:menu.item :href="route('users.index')" icon="users">
                             {{ __('Usuários') }}
