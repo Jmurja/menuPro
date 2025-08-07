@@ -18,6 +18,8 @@ export default defineConfig({
                 'resources/js/cpf-mask.js',
                 'resources/js/cnpj-mask.js',
                 'resources/js/cashier.js',
+                'resources/js/modal-validation.js',
+                'resources/js/waiter-orders.js',
             ],
             refresh: true,
         }),

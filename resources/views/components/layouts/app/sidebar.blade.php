@@ -12,7 +12,7 @@
     </a>
 
     <flux:navlist variant="outline">
-        <flux:navlist.group :heading="__('Platform')" class="grid">
+        <flux:navlist.group :heading="__('Menu')" class="grid">
             @cannot('admin-only')
             <flux:navlist.item icon="book-open" :href="route('menu')" :current="request()->routeIs('menu')">
                 {{ __('Menu') }}
@@ -22,9 +22,6 @@
             </flux:navlist.item>
             <flux:navlist.item icon="sparkles" :href="route('promotions.index')" :current="request()->routeIs('promotions.*')">
                 {{ __('Promoções') }}
-            </flux:navlist.item>
-            <flux:navlist.item icon="clipboard-document-list" :href="route('waiter.orders.index')" :current="request()->routeIs('waiter.orders.*')">
-                {{ __('Pedidos') }}
             </flux:navlist.item>
             @endcannot
             @can('admin-only')
