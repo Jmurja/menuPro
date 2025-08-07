@@ -40,6 +40,9 @@
                     <flux:navlist.item icon="building-storefront" :href="route('my_restaurants.index')" :current="request()->routeIs('my_restaurants.*')">
                         {{ __('Meu Restaurante') }}
                     </flux:navlist.item>
+                    <flux:navlist.item icon="chart-bar" :href="route('reports.index')" :current="request()->routeIs('reports.*')">
+                        {{ __('Relatórios') }}
+                    </flux:navlist.item>
                 </flux:navlist.group>
             @endcan
 
@@ -171,6 +174,9 @@
                     @can('owner-only')
                         <flux:menu.item :href="route('my_restaurants.index')" icon="building-storefront">
                             {{ __('Meu Restaurante') }}
+                        </flux:menu.item>
+                        <flux:menu.item :href="route('reports.index')" icon="chart-bar">
+                            {{ __('Relatórios') }}
                         </flux:menu.item>
                     @endcan
 

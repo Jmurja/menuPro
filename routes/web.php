@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MyRestaurantController;
 use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RestaurantController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
@@ -70,6 +71,10 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/owner/restaurants/{restaurant}/employees/{user}', [MyRestaurantController::class, 'updateEmployee'])->name('owner.employees.update');
         Route::delete('/owner/restaurants/{restaurant}/employees/{user}', [MyRestaurantController::class, 'destroyEmployee'])->name('owner.employees.destroy');
         // end my restaurants region
+
+        // reports region
+        Route::get('/relatorios', [ReportController::class, 'index'])->name('reports.index');
+        // end reports region
     });
 
     Route::middleware(['auth', 'can:waiter-only'])->group(function () {

@@ -36,7 +36,10 @@ class CashierController extends Controller
             ->get();
 
         foreach ($orders as $order) {
-            $order->update(['status' => 'fechado']);
+            $order->update([
+                'status' => 'fechado',
+                'is_closed' => true
+            ]);
         }
 
         return back()->with('success', 'Conta da mesa ' . $request->table . ' foi fechada com sucesso!');
