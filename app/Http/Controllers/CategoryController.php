@@ -9,6 +9,18 @@ use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
+
+    public function index()
+    {
+        $restaurant = auth()->user()->primaryRestaurant();
+
+        if (!$restaurant) {
+            return back()->with('error', 'Restaurante não vinculado.');
+        }
+
+        $categories = Category::where('restaurant_id', $restaurant->id)->orderBy('name')->get();
+        return view('categories.index', compact('categories'));
+    }    
     public function create()
     {
         $restaurant = auth()->user()->primaryRestaurant();
