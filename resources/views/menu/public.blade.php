@@ -125,12 +125,12 @@
             class="bg-primary text-white px-4 py-2 rounded-lg shadow font-bold text-base hover:bg-secondary transition-all duration-200"
         >Sobre</button>
         <div class="flex items-center gap-2 mt-2 md:mt-0">
-        <span id="status-abertura" class="flex items-center gap-1 px-2 py-1 rounded text-xs font-semibold bg-green-100 text-green-700 border border-green-300">
-          <svg id="relogio-icone" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <span id="status-abertura" class="flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-semibold {{ $isOpen ? 'bg-green-100 text-green-700 border border-green-300' : 'bg-red-100 text-red-700 border border-red-300' }} shadow-sm">
+          <svg id="relogio-icone" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 {{ $isOpen ? 'text-green-600' : 'text-red-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="10" stroke-width="2"/>
             <path d="M12 6v6l4 2" stroke-width="2"/>
           </svg>
-          <span id="texto-abertura">Aberto agora</span>
+          <span id="texto-abertura">{{ $isOpen ? 'Aberto agora' : 'Fechado agora' }}</span>
         </span>
             <button onclick="document.getElementById('modalHorario').classList.remove('hidden')" class="bg-secondary text-white px-5 py-2 rounded-lg shadow-lg font-bold text-base hover:bg-[#e45050] transition-all duration-200">
                 ⏰ Ver horários
@@ -144,9 +144,16 @@
     <div class="bg-white p-6 rounded-xl shadow-2xl text-primary max-w-sm w-full">
         <h3 class="text-xl font-bold mb-4">Horário de Funcionamento</h3>
         <ul class="space-y-1 text-sm">
-            <li><strong>Seg a Sex:</strong> 18h às 23h</li>
-            <li><strong>Sábado:</strong> 12h às 23h</li>
-            <li><strong>Domingo:</strong> 12h às 22h</li>
+            @foreach($hours as $hour)
+                <li class="{{ $hour->is_open ? '' : 'text-gray-400' }}">
+                    <strong>{{ $hour->day_name }}:</strong>
+                    @if($hour->is_open)
+                        {{ date('H:i', strtotime($hour->opening_time)) }} às {{ date('H:i', strtotime($hour->closing_time)) }}
+                    @else
+                        Fechado
+                    @endif
+                </li>
+            @endforeach
         </ul>
         <button onclick="document.getElementById('modalHorario').classList.add('hidden')" class="mt-4 bg-primary text-white px-4 py-2 rounded hover:bg-[#2e2727]">Fechar</button>
     </div>
@@ -263,60 +270,37 @@
         }
     });
 
-    // Relógio de status de abertura
-    function getStatusAbertura() {
-        const agora = new Date();
-        const dia = agora.getDay();
-        const hora = agora.getHours();
-        const min = agora.getMinutes();
-        let aberto = false, abreEm = null, fechaEm = null;
-
-        // Horários - Estes poderiam vir do banco de dados no futuro
-        let horarios = [
-            { dias: [1,2,3,4,5], abre: 18, fecha: 23 }, // Seg a Sex
-            { dias: [6], abre: 12, fecha: 23 },         // Sábado
-            { dias: [0], abre: 12, fecha: 22 }          // Domingo
-        ];
-        for (let h of horarios) {
-            if (h.dias.includes(dia)) {
-                if (hora >= h.abre && hora < h.fecha) {
-                    aberto = true;
-                    fechaEm = (h.fecha - hora - 1) * 60 + (60 - min);
-                } else if (hora < h.abre) {
-                    abreEm = (h.abre - hora - 1) * 60 + (60 - min);
-                }
-            }
-        }
-        return { aberto, abreEm, fechaEm };
-    }
-    function atualizaStatusAbertura() {
-        const status = getStatusAbertura();
+    // Status de abertura (baseado no horário do servidor)
+    // Nota: O status já é definido diretamente no HTML pelo servidor
+    // Este código apenas adiciona informações extras como "Fecha em X min" ou "Abre em X min"
+    document.addEventListener('DOMContentLoaded', function() {
         const texto = document.getElementById('texto-abertura');
         const span = document.getElementById('status-abertura');
         const icone = document.getElementById('relogio-icone');
-        if (status.aberto) {
-            span.className = "flex items-center gap-1 px-2 py-1 rounded text-xs font-semibold bg-green-100 text-green-700 border border-green-300";
-            texto.textContent = status.fechaEm > 60
-                ? "Aberto agora"
-                : `Fecha em ${status.fechaEm} min`;
-            icone.classList.remove('text-red-500');
-            icone.classList.add('text-green-600');
-        } else if (status.abreEm != null) {
-            span.className = "flex items-center gap-1 px-2 py-1 rounded text-xs font-semibold bg-yellow-100 text-yellow-700 border border-yellow-300";
-            texto.textContent = status.abreEm > 60
-                ? "Fechado agora"
-                : `Abre em ${status.abreEm} min`;
-            icone.classList.remove('text-green-600');
+
+        // Usar os dados calculados pelo servidor
+        const isOpen = {{ $isOpen ? 'true' : 'false' }};
+        const status = '{{ $openingInfo['status'] }}';
+
+        // Adicionar informações de tempo restante, se disponíveis
+        if (isOpen) {
+            const minutesUntilClose = {{ $openingInfo['minutesUntilClose'] ?? 0 }};
+            if (minutesUntilClose <= 60) {
+                texto.textContent = `Fecha em ${minutesUntilClose} min`;
+            }
+        } else if (status === 'opening_soon') {
+            span.className = "flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-semibold bg-yellow-100 text-yellow-700 border border-yellow-300 shadow-sm";
+            icone.classList.remove('text-green-600', 'text-red-500');
             icone.classList.add('text-yellow-600');
-        } else {
-            span.className = "flex items-center gap-1 px-2 py-1 rounded text-xs font-semibold bg-red-100 text-red-700 border border-red-300";
-            texto.textContent = "Fechado agora";
-            icone.classList.remove('text-green-600', 'text-yellow-600');
-            icone.classList.add('text-red-500');
+
+            const minutesUntilOpen = {{ $openingInfo['minutesUntilOpen'] ?? 0 }};
+            if (minutesUntilOpen <= 60) {
+                texto.textContent = `Abre em ${minutesUntilOpen} min`;
+            } else {
+                texto.textContent = "Fechado agora";
+            }
         }
-    }
-    atualizaStatusAbertura();
-    setInterval(atualizaStatusAbertura, 60000);
+    });
 
     // Modal Cardápio - abre ao clicar em qualquer card de comida/bebida/oferta
     function openCardModal(img, title, desc, obs, price) {

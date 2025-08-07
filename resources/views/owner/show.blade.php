@@ -46,15 +46,25 @@
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-xl font-semibold text-zinc-900 dark:text-white">Informações do Restaurante</h2>
                 <div class="flex items-center gap-3">
-                    <button type="button"
-                            data-modal-target="edit-modal-{{ $restaurant->id }}"
-                            data-modal-toggle="edit-modal-{{ $restaurant->id }}"
-                            class="inline-flex items-center justify-center gap-1.5 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-colors">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                        </svg>
-                        Editar
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <a href="{{ route('restaurant.hours.edit', $restaurant) }}"
+                           class="inline-flex items-center justify-center gap-1.5 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Horários
+                        </a>
+
+                        <button type="button"
+                                data-modal-target="edit-modal-{{ $restaurant->id }}"
+                                data-modal-toggle="edit-modal-{{ $restaurant->id }}"
+                                class="inline-flex items-center justify-center gap-1.5 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                            </svg>
+                            Editar
+                        </button>
+                    </div>
                     <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium
                         {{ $restaurant->is_active ? 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300' }}">
                         <span class="flex w-2 h-2 rounded-full {{ $restaurant->is_active ? 'bg-green-500' : 'bg-red-500' }}"></span>

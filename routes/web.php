@@ -7,6 +7,7 @@ use App\Http\Controllers\MyRestaurantController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\RestaurantHoursController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
 use App\Livewire\Settings\Appearance;
@@ -71,6 +72,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/owner/restaurants/{restaurant}/employees', [MyRestaurantController::class, 'storeEmployee'])->name('owner.employees.store');
         Route::put('/owner/restaurants/{restaurant}/employees/{user}', [MyRestaurantController::class, 'updateEmployee'])->name('owner.employees.update');
         Route::delete('/owner/restaurants/{restaurant}/employees/{user}', [MyRestaurantController::class, 'destroyEmployee'])->name('owner.employees.destroy');
+
+        // restaurant hours routes
+        Route::get('/meus-restaurantes/{restaurant}/horarios', [RestaurantHoursController::class, 'edit'])->name('restaurant.hours.edit');
+        Route::put('/meus-restaurantes/{restaurant}/horarios', [RestaurantHoursController::class, 'update'])->name('restaurant.hours.update');
         // end my restaurants region
 
         // reports region
