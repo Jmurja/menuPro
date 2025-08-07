@@ -35,6 +35,7 @@ class RestaurantController extends Controller
         $validated = $request->validate([
             'name'         => ['required', 'string', 'max:255'],
             'cnpj' => ['nullable', 'unique:restaurants,cnpj'],
+            'phone'        => ['nullable', 'string', 'max:20'],
             'zip_code'     => ['nullable', 'string', 'max:9'],
             'street'       => ['nullable', 'string', 'max:255'],
             'number'       => ['nullable', 'string', 'max:50'],
@@ -55,6 +56,7 @@ class RestaurantController extends Controller
         $restaurant = Restaurant::create([
             'name'         => $validated['name'],
             'cnpj'         => $validated['cnpj'] ?? null,
+            'phone'        => $validated['phone'] ?? null,
             'zip_code'     => $validated['zip_code'] ?? null,
             'street'       => $validated['street'] ?? null,
             'number'       => $validated['number'] ?? null,
@@ -75,6 +77,7 @@ class RestaurantController extends Controller
         $validated = $request->validate([
             'name'         => ['required', 'string', 'max:255'],
             'cnpj' => ['nullable', Rule::unique('restaurants', 'cnpj')->ignore($restaurant->id)],
+            'phone'        => ['nullable', 'string', 'max:20'],
             'zip_code'     => ['nullable', 'string', 'max:9'],
             'street'       => ['nullable', 'string', 'max:255'],
             'number'       => ['nullable', 'string', 'max:50'],
@@ -95,6 +98,7 @@ class RestaurantController extends Controller
         $restaurant->update([
             'name'         => $validated['name'],
             'cnpj'         => $validated['cnpj'] ?? null,
+            'phone'        => $validated['phone'] ?? null,
             'zip_code'     => $validated['zip_code'] ?? null,
             'street'       => $validated['street'] ?? null,
             'number'       => $validated['number'] ?? null,

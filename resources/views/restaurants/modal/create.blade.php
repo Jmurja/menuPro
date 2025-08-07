@@ -34,6 +34,13 @@
                            placeholder="00.000.000/0000-00">
                   </div>
 
+                  <div>
+                    <label for="phone" class="block mb-1 font-medium text-zinc-700 dark:text-white">Telefone</label>
+                    <input type="text" name="phone" id="phone"
+                           class="phone-mask mt-1 block w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white"
+                           placeholder="(00) 00000-0000">
+                  </div>
+
                     <div>
                         <label for="zip_code" class="block mb-1 font-medium text-zinc-700 dark:text-white">CEP</label>
                         <input type="text" name="zip_code" id="zip_code" maxlength="9" placeholder="00000-000"

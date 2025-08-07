@@ -67,6 +67,7 @@ Route::middleware(['auth'])->group(function () {
         // my restaurants region
         Route::get('/meus-restaurantes', [MyRestaurantController::class, 'index'])->name('my_restaurants.index');
         Route::get('/meus-restaurantes/{restaurant}', [MyRestaurantController::class, 'show'])->name('my_restaurants.show');
+        Route::put('/meus-restaurantes/{restaurant}', [MyRestaurantController::class, 'update'])->name('my_restaurants.update');
         Route::post('/owner/restaurants/{restaurant}/employees', [MyRestaurantController::class, 'storeEmployee'])->name('owner.employees.store');
         Route::put('/owner/restaurants/{restaurant}/employees/{user}', [MyRestaurantController::class, 'updateEmployee'])->name('owner.employees.update');
         Route::delete('/owner/restaurants/{restaurant}/employees/{user}', [MyRestaurantController::class, 'destroyEmployee'])->name('owner.employees.destroy');

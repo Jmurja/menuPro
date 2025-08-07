@@ -45,11 +45,22 @@
         <div class="bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-zinc-200 dark:border-zinc-700 p-6 mb-8">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-xl font-semibold text-zinc-900 dark:text-white">Informações do Restaurante</h2>
-                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium
-                    {{ $restaurant->is_active ? 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300' }}">
-                    <span class="flex w-2 h-2 rounded-full {{ $restaurant->is_active ? 'bg-green-500' : 'bg-red-500' }}"></span>
-                    {{ $restaurant->is_active ? 'Ativo' : 'Inativo' }}
-                </span>
+                <div class="flex items-center gap-3">
+                    <button type="button"
+                            data-modal-target="edit-modal-{{ $restaurant->id }}"
+                            data-modal-toggle="edit-modal-{{ $restaurant->id }}"
+                            class="inline-flex items-center justify-center gap-1.5 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                        </svg>
+                        Editar
+                    </button>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium
+                        {{ $restaurant->is_active ? 'bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300' }}">
+                        <span class="flex w-2 h-2 rounded-full {{ $restaurant->is_active ? 'bg-green-500' : 'bg-red-500' }}"></span>
+                        {{ $restaurant->is_active ? 'Ativo' : 'Inativo' }}
+                    </span>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -60,6 +71,12 @@
                             <span class="block text-xs text-zinc-500 dark:text-zinc-400">CNPJ</span>
                             <span class="text-zinc-900 dark:text-white font-medium">
                                 {{ $restaurant->cnpj ? preg_replace('/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/', '$1.$2.$3/$4-$5', $restaurant->cnpj) : '-' }}
+                            </span>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-zinc-500 dark:text-zinc-400">Telefone</span>
+                            <span class="text-zinc-900 dark:text-white font-medium">
+                                {{ $restaurant->phone ?? '-' }}
                             </span>
                         </div>
                         <div>
@@ -209,3 +226,4 @@
 </x-layouts.app>
 @include('owner.modal.create-employer')
 @include('owner.modal.edit-employee')
+@include('restaurants.modal.edit', ['restaurants' => [$restaurant], 'users' => $restaurant->users])

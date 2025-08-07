@@ -74,7 +74,7 @@ class MenuController extends Controller
                           ->orderBy('name')
                           ->get();
 
-    $whatsappNumber = $restaurant->whatsapp ?? '5511999999999'; // Exemplo
+    $whatsappNumber = $restaurant->phone ?? '5511999999999'; // Fallback if no phone number is set
 
     return view('menu.public', compact('items', 'categories', 'whatsappNumber', 'restaurant', 'request'));
 }

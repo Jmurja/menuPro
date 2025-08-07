@@ -78,7 +78,49 @@ class MyRestaurantController extends Controller
 
     public function show(Restaurant $restaurant)
     {
-
         return view('owner.show', compact('restaurant'));
+    }
+
+    public function update(Request $request, Restaurant $restaurant)
+    {
+        $validated = $request->validate([
+            'name'         => ['required', 'string', 'max:255'],
+            'cnpj'         => ['nullable', Rule::unique('restaurants', 'cnpj')->ignore($restaurant->id)],
+            'phone'        => ['nullable', 'string', 'max:20'],
+            'zip_code'     => ['nullable', 'string', 'max:9'],
+            'street'       => ['nullable', 'string', 'max:255'],
+            'number'       => ['nullable', 'string', 'max:50'],
+            'complement'   => ['nullable', 'string', 'max:255'],
+            'neighborhood' => ['nullable', 'string', 'max:255'],
+            'city'         => ['nullable', 'string', 'max:255'],
+            'state'        => ['nullable', 'string', 'size:2'],
+            'is_active'    => ['nullable', 'boolean'],
+            'user_id'      => ['required', 'exists:users,id'],
+        ]);
+
+        $validated['zip_code'] = isset($validated['zip_code'])
+            ? preg_replace('/\D/', '', $validated['zip_code'])
+            : null;
+        $validated['cnpj'] = isset($validated['cnpj'])
+            ? preg_replace('/\D/', '', $validated['cnpj'])
+            : null;
+
+        $restaurant->update([
+            'name'         => $validated['name'],
+            'cnpj'         => $validated['cnpj'] ?? null,
+            'phone'        => $validated['phone'] ?? null,
+            'zip_code'     => $validated['zip_code'] ?? null,
+            'street'       => $validated['street'] ?? null,
+            'number'       => $validated['number'] ?? null,
+            'complement'   => $validated['complement'] ?? null,
+            'neighborhood' => $validated['neighborhood'] ?? null,
+            'city'         => $validated['city'] ?? null,
+            'state'        => $validated['state'] ?? null,
+            'is_active'    => $request->has('is_active'),
+        ]);
+
+        $restaurant->users()->sync([$validated['user_id']]);
+
+        return redirect()->back()->with('success', 'Restaurante atualizado com sucesso.');
     }
 }
