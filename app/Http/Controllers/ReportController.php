@@ -38,6 +38,19 @@ class ReportController extends Controller
             ->pluck('total', 'status')
             ->toArray();
 
+        $ordersByPaymentMethod = Order::where('restaurant_id', $restaurant->id)
+            ->where('is_closed', true)
+            ->whereBetween('orders.created_at', [$startDate, $endDate])
+            ->whereNotNull('payment_method')
+            ->select(
+                'payment_method',
+                DB::raw('count(*) as total'),
+                DB::raw('sum(order_items.price * order_items.quantity) as revenue')
+            )
+            ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+            ->groupBy('payment_method')
+            ->get();
+
         $totalOrders = Order::where('restaurant_id', $restaurant->id)
             ->whereBetween('created_at', [$startDate, $endDate])
             ->count();
@@ -75,6 +88,7 @@ class ReportController extends Controller
         return view('reports.index', compact(
             'restaurant',
             'ordersByStatus',
+            'ordersByPaymentMethod',
             'totalOrders',
             'totalRevenue',
             'ordersByDay',

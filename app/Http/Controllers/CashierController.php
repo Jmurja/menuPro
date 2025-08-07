@@ -26,6 +26,9 @@ class CashierController extends Controller
     {
         $request->validate([
             'table' => 'required|string',
+            'payment_method' => 'required|string|in:dinheiro,cartao_credito,cartao_debito,pix',
+            'split_bill' => 'nullable|boolean',
+            'split_count' => 'nullable|integer|min:1|max:20',
         ]);
 
         $restaurant = Auth::user()->primaryRestaurant();
@@ -38,11 +41,18 @@ class CashierController extends Controller
         foreach ($orders as $order) {
             $order->update([
                 'status' => 'fechado',
-                'is_closed' => true
+                'is_closed' => true,
+                'payment_method' => $request->payment_method
             ]);
         }
 
-        return back()->with('success', 'Conta da mesa ' . $request->table . ' foi fechada com sucesso!');
+        $message = 'Conta da mesa ' . $request->table . ' foi fechada com sucesso!';
+
+        if ($request->split_bill && $request->split_count > 1) {
+            $message .= ' Conta dividida em ' . $request->split_count . ' partes.';
+        }
+
+        return back()->with('success', $message);
     }
 
     public function fetchOpenOrders()

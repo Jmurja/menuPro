@@ -55,6 +55,52 @@
             <form id="drawer-form" method="POST" action="/caixa/fechar-conta" class="mt-6">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="table" id="drawer-table">
+
+                <!-- Forma de Pagamento -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                        Forma de Pagamento
+                    </label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="flex items-center p-3 border border-zinc-300 dark:border-zinc-600 rounded-lg cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
+                            <input type="radio" name="payment_method" value="dinheiro" class="mr-2" required>
+                            <span class="text-sm">Dinheiro</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-zinc-300 dark:border-zinc-600 rounded-lg cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
+                            <input type="radio" name="payment_method" value="pix" class="mr-2">
+                            <span class="text-sm">PIX</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-zinc-300 dark:border-zinc-600 rounded-lg cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
+                            <input type="radio" name="payment_method" value="cartao_credito" class="mr-2">
+                            <span class="text-sm">Cartão de Crédito</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-zinc-300 dark:border-zinc-600 rounded-lg cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
+                            <input type="radio" name="payment_method" value="cartao_debito" class="mr-2">
+                            <span class="text-sm">Cartão de Débito</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Divisão da Conta -->
+                <div class="mb-4">
+                    <div class="flex items-center mb-2">
+                        <input type="checkbox" id="split-bill" name="split_bill" value="1" class="mr-2 flex items-center p-3 border border-zinc-300 dark:border-zinc-600 rounded-lg cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
+                        <label for="split-bill" class="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+                            Dividir a conta
+                        </label>
+                    </div>
+                    <div id="split-options" class="pl-6 hidden">
+                        <label class="block text-sm text-zinc-600 dark:text-zinc-400 mb-1">
+                            Número de pessoas
+                        </label>
+                        <input type="number" name="split_count" min="2" max="20" value="2"
+                               class="w-full rounded-md border-zinc-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-zinc-700 dark:border-zinc-600 dark:text-white">
+                        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
+                            Valor por pessoa: R$ <span id="per-person-value">0,00</span>
+                        </p>
+                    </div>
+                </div>
+
                 <button type="submit" class="w-full bg-green-600 text-white px-4 py-3 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />

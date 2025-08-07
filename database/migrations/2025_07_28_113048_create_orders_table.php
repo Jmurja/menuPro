@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('restaurant_id')->constrained()->cascadeOnDelete();
             $table->string('table'); // ex: A01, B10
             $table->string('status')->default('aberto'); // aberto | fechado
+            $table->string('payment_method')->nullable(); // dinheiro | cartao_credito | cartao_debito | pix
             $table->timestamps();
         });
     }

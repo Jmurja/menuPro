@@ -110,6 +110,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalEl = document.getElementById('drawer-total');
         const tableInput = document.getElementById('drawer-table');
         const title = document.getElementById('drawer-title');
+        const splitBillCheckbox = document.getElementById('split-bill');
+        const splitOptions = document.getElementById('split-options');
+        const splitCountInput = document.querySelector('input[name="split_count"]');
+        const perPersonValue = document.getElementById('per-person-value');
 
         title.innerText = `Mesa ${table} - Resumo`;
         content.innerHTML = '';
@@ -131,6 +135,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         totalEl.innerText = total.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
         tableInput.value = table;
+
+        // Reset payment method and split bill options
+        document.querySelectorAll('input[name="payment_method"]').forEach(radio => radio.checked = false);
+        splitBillCheckbox.checked = false;
+        splitOptions.classList.add('hidden');
+
+        // Handle split bill functionality
+        splitBillCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                splitOptions.classList.remove('hidden');
+                updatePerPersonValue();
+            } else {
+                splitOptions.classList.add('hidden');
+            }
+        });
+
+        splitCountInput.addEventListener('input', updatePerPersonValue);
+
+        function updatePerPersonValue() {
+            const count = parseInt(splitCountInput.value) || 2;
+            const perPerson = total / count;
+            perPersonValue.innerText = perPerson.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+        }
 
         drawer.classList.remove('translate-x-full');
     }

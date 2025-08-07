@@ -70,6 +70,7 @@
             <div class="w-full h-80" id="orders-chart"></div>
         </div>
 
+        <!-- Status dos Pedidos e Métodos de Pagamento -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <!-- Status dos Pedidos -->
             <div class="bg-white dark:bg-zinc-800 rounded-lg shadow p-6">
@@ -101,7 +102,66 @@
                 </div>
             </div>
 
-            <!-- Itens Mais Vendidos -->
+            <!-- Métodos de Pagamento -->
+            <div class="bg-white dark:bg-zinc-800 rounded-lg shadow p-6">
+                <h2 class="text-xl font-semibold mb-4 text-zinc-900 dark:text-white">Métodos de Pagamento</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full table-auto text-sm text-left text-zinc-500 dark:text-zinc-400">
+                        <thead class="text-xs text-zinc-700 uppercase bg-zinc-100 dark:bg-zinc-700 dark:text-zinc-200">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">Método</th>
+                                <th scope="col" class="px-6 py-3">Quantidade</th>
+                                <th scope="col" class="px-6 py-3">Receita</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($ordersByPaymentMethod as $paymentData)
+                                <tr class="bg-white border-b dark:bg-zinc-800 dark:border-zinc-700">
+                                    <td class="px-6 py-4">
+                                        <span class="inline-block px-2 py-1 text-xs font-semibold rounded
+                                            @if($paymentData->payment_method == 'dinheiro')
+                                                bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300
+                                            @elseif($paymentData->payment_method == 'pix')
+                                                bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300
+                                            @elseif($paymentData->payment_method == 'cartao_credito')
+                                                bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300
+                                            @elseif($paymentData->payment_method == 'cartao_debito')
+                                                bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300
+                                            @else
+                                                bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300
+                                            @endif
+                                        ">
+                                            @if($paymentData->payment_method == 'dinheiro')
+                                                Dinheiro
+                                            @elseif($paymentData->payment_method == 'pix')
+                                                PIX
+                                            @elseif($paymentData->payment_method == 'cartao_credito')
+                                                Cartão de Crédito
+                                            @elseif($paymentData->payment_method == 'cartao_debito')
+                                                Cartão de Débito
+                                            @else
+                                                {{ $paymentData->payment_method }}
+                                            @endif
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4">{{ $paymentData->total }}</td>
+                                    <td class="px-6 py-4">R$ {{ number_format($paymentData->revenue, 2, ',', '.') }}</td>
+                                </tr>
+                            @empty
+                                <tr class="bg-white border-b dark:bg-zinc-800 dark:border-zinc-700">
+                                    <td colspan="3" class="px-6 py-4 text-center text-zinc-500 dark:text-zinc-400">
+                                        Nenhum dado de pagamento disponível para o período selecionado.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Itens Mais Vendidos -->
+        <div class="grid grid-cols-1 gap-6 mb-8">
             <div class="bg-white dark:bg-zinc-800 rounded-lg shadow p-6">
                 <h2 class="text-xl font-semibold mb-4 text-zinc-900 dark:text-white">Itens Mais Vendidos</h2>
                 <div class="overflow-x-auto">
