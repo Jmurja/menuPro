@@ -21,6 +21,7 @@ export default defineConfig({
                 'resources/js/modal-validation.js',
                 'resources/js/waiter-orders.js',
                 'resources/js/promotion-form.js',
+                'resources/js/owner-reports.js',
             ],
             refresh: true,
         }),
