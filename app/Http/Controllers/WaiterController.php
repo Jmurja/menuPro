@@ -20,7 +20,7 @@ class WaiterController extends Controller
             ->where('is_active', true)
             ->get()
             ->groupBy(fn($item) => $item->category->name ?? 'Sem Categoria');
-
+    
         return view('waiter.orders.index', compact('items'));
     }
 

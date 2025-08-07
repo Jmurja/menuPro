@@ -120,7 +120,7 @@
                         <label for="table_number" class="block mb-2 text-sm font-medium text-zinc-700 dark:text-white">
                             Número da Mesa <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" name="table_number" id="table_number" required
+                        <input type="text" name="table_number" id="table_number"
                                class="block w-full rounded-lg border border-zinc-300 bg-zinc-50 p-2.5 text-zinc-900 focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white dark:placeholder-zinc-400 dark:focus:border-blue-500 dark:focus:ring-blue-500">
                     </div>
 
@@ -128,10 +128,10 @@
                         <label for="item_id" class="block mb-2 text-sm font-medium text-zinc-700 dark:text-white">
                             Item <span class="text-red-500">*</span>
                         </label>
-                        <select name="item_id" id="item_id" required
+                        <select name="item_id" id="item_id" 
                                 class="block w-full rounded-lg border border-zinc-300 bg-zinc-50 p-2.5 text-zinc-900 focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white dark:placeholder-zinc-400 dark:focus:border-blue-500 dark:focus:ring-blue-500">
                             <option value="">Selecione um item</option>
-                            @foreach($menuItems ?? [] as $category => $items)
+                            @foreach($items ?? [] as $category => $items)
                                 <optgroup label="{{ $category }}">
                                     @foreach($items as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }} - R$ {{ number_format($item->price, 2, ',', '.') }}</option>
@@ -147,7 +147,7 @@
                         <label for="quantity" class="block mb-2 text-sm font-medium text-zinc-700 dark:text-white">
                             Quantidade <span class="text-red-500">*</span>
                         </label>
-                        <input type="number" name="quantity" id="quantity" min="1" value="1" required
+                        <input type="number" name="quantity" id="quantity" min="1" value="1" 
                                class="block w-full rounded-lg border border-zinc-300 bg-zinc-50 p-2.5 text-zinc-900 focus:border-blue-500 focus:ring-blue-500 dark:border-zinc-600 dark:bg-zinc-700 dark:text-white dark:placeholder-zinc-400 dark:focus:border-blue-500 dark:focus:ring-blue-500">
                     </div>
 

@@ -20,6 +20,7 @@ export default defineConfig({
                 'resources/js/cashier.js',
                 'resources/js/modal-validation.js',
                 'resources/js/waiter-orders.js',
+                'resources/js/promotion-form.js',
             ],
             refresh: true,
         }),
