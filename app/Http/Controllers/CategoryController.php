@@ -68,4 +68,25 @@ class CategoryController extends Controller
         return back()->with('success', 'Categoria criada com sucesso!');
     }
 
+    public function destroy($id)
+    {
+        $user = Auth::user();
+        $restaurant = $user->primaryRestaurant();
+
+        if (!$restaurant) {
+            return back()->with('error', 'Restaurante não vinculado.');
+        }
+
+        // Ensure the category belongs to the authenticated user's primary restaurant
+        $category = Category::where('restaurant_id', $restaurant->id)->findOrFail($id);
+
+        // Detach related menu items to avoid foreign key constraint issues
+        if (method_exists($category, 'menuItems')) {
+            $category->menuItems()->update(['category_id' => null]);
+        }
+
+        $category->delete();
+
+        return back()->with('success', 'Categoria excluída com sucesso!');
+    }
 }

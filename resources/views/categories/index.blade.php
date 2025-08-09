@@ -80,13 +80,19 @@
                                             {{ $category->menuItems->count() }} itens
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4 text-right space-x-2">
-                                        <button data-modal-target="edit-category-modal-{{ $category->id }}" data-modal-toggle="edit-category-modal-{{ $category->id }}" class="font-medium text-blue-600 dark:text-blue-400 hover:underline">Editar</button>
-                                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="inline-block">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Tem certeza que deseja excluir esta categoria? Todos os itens associados ficarão sem categoria.')" class="font-medium text-red-600 dark:text-red-400 hover:underline">Excluir</button>
-                                        </form>
+                                    <td class="px-6 py-4 text-right space-x-1">
+                                        <button data-modal-target="edit-category-modal-{{ $category->id }}" data-modal-toggle="edit-category-modal-{{ $category->id }}" class="inline-flex items-center p-2 rounded-md text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-zinc-700" title="Editar">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+                                            <span class="sr-only">Editar</span>
+                                        </button>
+                                        <button type="button" data-modal-target="delete-category-modal-{{ $category->id }}" data-modal-toggle="delete-category-modal-{{ $category->id }}" class="inline-flex items-center p-2 rounded-md text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-zinc-700" title="Excluir">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                            <span class="sr-only">Excluir</span>
+                                        </button>
                                     </td>
                                 </tr>
 
@@ -144,6 +150,48 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- Delete Category Modal -->
+                                <div id="delete-category-modal-{{ $category->id }}" tabindex="-1" aria-hidden="true"
+                                     class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto h-full max-h-full bg-black/50 backdrop-blur-sm">
+                                    <div class="relative w-full max-w-md max-h-full mx-auto mt-20">
+                                        <div class="relative bg-white rounded-xl shadow-lg dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 transform transition-all">
+                                            <div class="flex items-center justify-between px-6 py-4 border-b rounded-t dark:border-zinc-700">
+                                                <h3 class="text-xl font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                    </svg>
+                                                    Excluir Categoria
+                                                </h3>
+                                                <button type="button" class="text-zinc-400 bg-transparent hover:bg-zinc-200 hover:text-zinc-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-zinc-700 dark:hover:text-white transition-colors" data-modal-hide="delete-category-modal-{{ $category->id }}">
+                                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                                </button>
+                                            </div>
+
+                                            <div class="p-6">
+                                                <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-6">
+                                                    Tem certeza que deseja excluir a categoria <span class="font-semibold">{{ $category->name }}</span>?<br/>
+                                                    Todos os itens associados ficarão <span class="font-semibold">sem categoria</span>.
+                                                </p>
+                                                <div class="flex items-center justify-between pt-2 space-x-4">
+                                                    <button type="button" data-modal-hide="delete-category-modal-{{ $category->id }}"
+                                                            class="flex-1 px-4 py-2.5 text-sm font-medium bg-zinc-200 rounded-lg hover:bg-zinc-300 focus:ring-4 focus:ring-zinc-300 text-zinc-700 dark:bg-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-600 dark:focus:ring-zinc-600 transition-colors">
+                                                        Cancelar
+                                                    </button>
+                                                    <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="flex-1">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                                class="w-full px-4 py-2.5 text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 rounded-lg transition-colors dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                                                            Confirmar Exclusão
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             @endforeach
                         </tbody>
                     </table>
