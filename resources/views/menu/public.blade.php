@@ -99,6 +99,15 @@
         #modalCardapio {
             z-index: 9999 !important;
         }
+
+        /* Estilos para a seção de ofertas fixa */
+        .sticky-offer {
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            z-index: 40;
+        }
     </style>
 </head>
 <body class="bg-background text-primary font-sans">
@@ -186,6 +195,7 @@
 
 <main class="max-w-4xl mx-auto p-4 space-y-12">
 
+
     <!-- Navbar -->
     <nav class="bg-primary height text-white shadow sticky top-0 z-50 rounded-b-xl">
         <div class="max-w-6xl mx-auto px-2 sm:px-4">
@@ -193,7 +203,9 @@
                 <div class="flex-shrink-0 font-bold text-xl">🍽️ Cardápio</div>
                 <div class="hidden md:flex flex-wrap gap-2">
                     @foreach($categories as $category)
-                        <a href="#{{ \Illuminate\Support\Str::slug($category->name) }}" class="hover:text-secondary transition px-2 py-1 rounded hover:bg-white/10">{{ $category->name }}</a>
+                        <a href="#{{ \Illuminate\Support\Str::slug($category->name) }}" class="hover:text-secondary transition px-2 py-1 rounded hover:bg-white/10">
+                            {{ $category->icon ?? '🍽️' }} {{ $category->name }}
+                        </a>
                     @endforeach
                 </div>
                 <div class="md:hidden">
@@ -207,22 +219,25 @@
         </div>
         <div id="mobile-menu" class="md:hidden hidden px-2 pb-4 bg-primary rounded-b-xl flex flex-col gap-1">
             @foreach($categories as $category)
-                <a href="#{{ \Illuminate\Support\Str::slug($category->name) }}" class="block py-2 hover:text-secondary">{{ $category->name }}</a>
+                <a href="#{{ \Illuminate\Support\Str::slug($category->name) }}" class="block py-2 hover:text-secondary">
+                    {{ $category->icon ?? '🍽️' }} {{ $category->name }}
+                </a>
             @endforeach
         </div>
     </nav>
 
     @foreach($categories as $category)
-    <section id="{{ \Illuminate\Support\Str::slug($category->name) }}" class="book-section">
+    <section id="{{ \Illuminate\Support\Str::slug($category->name) }}" class="book-section {{ $loop->first ? 'sticky top-20 z-40 sticky-offer' : '' }}">
         <h2 class="text-2xl font-extrabold mb-4 pb-2 border-b-2 border-[#ffd2d2]">
             @if($loop->first)
             <span class="inline-block animate-fire text-3xl" style="animation: fire 1s infinite;">
               🔥
             </span>
+            {{ $category->offer_type ? ucfirst($category->offer_type) : ($category->is_offer ? 'Ofertas' : $category->name) }}
             @else
-            {{ $category->emoji ?? '🍽️' }}
-            @endif
+            {{ $category->icon ?? '🍽️' }}
             {{ $category->name }}
+            @endif
         </h2>
         <div class="grid md:grid-cols-2 gap-6">
             @if(isset($items[$category->name]))
@@ -272,7 +287,7 @@
 
     // Status de abertura (baseado no horário do servidor)
     // Nota: O status já é definido diretamente no HTML pelo servidor
-    // Este código apenas adiciona informações extras como "Fecha em X min" ou "Abre em X min"
+    // Não mostramos mais informações de tempo, apenas "Aberto agora" ou "Fechado agora"
     document.addEventListener('DOMContentLoaded', function() {
         const texto = document.getElementById('texto-abertura');
         const span = document.getElementById('status-abertura');
@@ -282,23 +297,12 @@
         const isOpen = {{ $isOpen ? 'true' : 'false' }};
         const status = '{{ $openingInfo['status'] }}';
 
-        // Adicionar informações de tempo restante, se disponíveis
-        if (isOpen) {
-            const minutesUntilClose = {{ $openingInfo['minutesUntilClose'] ?? 0 }};
-            if (minutesUntilClose <= 60) {
-                texto.textContent = `Fecha em ${minutesUntilClose} min`;
-            }
-        } else if (status === 'opening_soon') {
+        // Apenas ajustar a cor para status "opening_soon" (amarelo)
+        if (status === 'opening_soon') {
             span.className = "flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-semibold bg-yellow-100 text-yellow-700 border border-yellow-300 shadow-sm";
             icone.classList.remove('text-green-600', 'text-red-500');
             icone.classList.add('text-yellow-600');
-
-            const minutesUntilOpen = {{ $openingInfo['minutesUntilOpen'] ?? 0 }};
-            if (minutesUntilOpen <= 60) {
-                texto.textContent = `Abre em ${minutesUntilOpen} min`;
-            } else {
-                texto.textContent = "Fechado agora";
-            }
+            texto.textContent = "Fechado agora";
         }
     });
 

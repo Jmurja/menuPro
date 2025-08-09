@@ -98,13 +98,8 @@ class MenuController extends Controller
         });
     }
 
-    // For testing purposes, we'll use a fixed time if provided
-    // Otherwise, use the current server time
-    // $currentTime = now('America/Sao_Paulo'); // Use the correct timezone
-
-    // Since the issue description mentions the current time is 2025-08-07 15:42
-    // and the restaurant should be open (hours 08:00-18:00), we'll use this time
-    $currentTime = \Carbon\Carbon::createFromFormat('Y-m-d H:i', '2025-08-07 15:42');
+    // Use the current server time for determining restaurant status
+    $currentTime = now();
 
     $currentDay = $currentTime->dayOfWeek;
     $currentHour = $currentTime->hour;
@@ -147,9 +142,8 @@ class MenuController extends Controller
         $currentMinutes = $currentHour * 60 + $currentMinute;
 
         // Debug information
-        \Log::info("Day: $currentDay, Current time: $currentHour:$currentMinute ($currentMinutes minutes)");
-        \Log::info("Opening time: $openingTimeStr ($openMinutes minutes), Closing time: $closingTimeStr ($closeMinutes minutes)");
-        \Log::info("Is open check: " . ($currentMinutes >= $openMinutes && $currentMinutes < $closeMinutes ? 'Yes' : 'No'));
+        \Log::info("Server time: " . now()->format('Y-m-d H:i:s') . " | Local time: " . $currentTime->format('Y-m-d H:i:s') . " (Day: $currentDay, Time: $currentHour:$currentMinute) | Is open: " . ($currentMinutes >= $openMinutes && $currentMinutes < $closeMinutes ? 'Yes' : 'No') . " | Status: " . ($currentMinutes >= $openMinutes && $currentMinutes < $closeMinutes ? 'open' : ($currentMinutes < $openMinutes ? 'opening_soon' : 'closed')));
+        \Log::info("Today's hours: " . ($todayHours->day_name ?? 'Unknown') . " | Is day open: " . ($todayHours->is_open ? 'Yes' : 'No') . " | Opening: $openingTimeStr | Closing: $closingTimeStr");
 
         // Force the restaurant to be open for testing if needed
         // $isOpen = true;

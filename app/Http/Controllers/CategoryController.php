@@ -20,7 +20,7 @@ class CategoryController extends Controller
 
         $categories = Category::where('restaurant_id', $restaurant->id)->orderBy('name')->get();
         return view('categories.index', compact('categories'));
-    }    
+    }
     public function create()
     {
         $restaurant = auth()->user()->primaryRestaurant();
@@ -44,12 +44,25 @@ class CategoryController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'icon' => 'nullable|string|max:10',
+            'custom_icon' => 'nullable|string|max:10',
+            'is_offer' => 'nullable|boolean',
+            'offer_type' => 'nullable|string|in:ofertas,combos',
         ]);
+
+        // Capitalize the first letter of the category name
+        $name = ucfirst($validated['name']);
+
+        // Determine the icon (either from dropdown or custom input)
+        $icon = !empty($validated['custom_icon']) ? $validated['custom_icon'] : $validated['icon'];
 
         Category::create([
             'restaurant_id' => $restaurant->id,
-            'name' => $validated['name'],
-            'slug' => \Illuminate\Support\Str::slug($validated['name']),
+            'name' => $name,
+            'slug' => \Illuminate\Support\Str::slug($name),
+            'icon' => $icon,
+            'is_offer' => isset($validated['is_offer']),
+            'offer_type' => isset($validated['is_offer']) ? $validated['offer_type'] : null,
         ]);
 
         return back()->with('success', 'Categoria criada com sucesso!');
